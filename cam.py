@@ -5,7 +5,7 @@ import numpy as np
 import torch
 from torchvision import models
 from pytorch_grad_cam import (
-    GradCAM, HiResCAM, ScoreCAM, GradCAMPlusPlus,
+    ShapleyCAM, GradCAM, HiResCAM, ScoreCAM, GradCAMPlusPlus,
     AblationCAM, XGradCAM, EigenCAM, EigenGradCAM,
     LayerCAM, FullGrad, GradCAMElementWise
 )
@@ -41,7 +41,7 @@ def get_args():
                         ],
                         help='CAM method')
 
-    parser.add_argument('--output-dir', type=str, default='output',
+    parser.add_argument('--output-dir', type=str, default='output_efficientB0_2',
                         help='Output directory to save the images')
     args = parser.parse_args()
     
@@ -64,6 +64,7 @@ if __name__ == '__main__':
     args = get_args()
     methods = {
         "gradcam": GradCAM,
+        "shapleycam": ShapleyCAM,
         "hirescam": HiResCAM,
         "scorecam": ScoreCAM,
         "gradcam++": GradCAMPlusPlus,
@@ -76,7 +77,8 @@ if __name__ == '__main__':
         "gradcamelementwise": GradCAMElementWise
     }
 
-    model = models.resnet50(pretrained=True).to(torch.device(args.device)).eval()
+    # model = models.resnet50(pretrained=True).to(torch.device(args.device)).eval()
+    model = models.efficientnet_b0(pretrained=True).to(torch.device(args.device)).eval()
 
     # Choose the target layer you want to compute the visualization for.
     # Usually this will be the last convolutional layer in the model.
@@ -91,7 +93,8 @@ if __name__ == '__main__':
     # from pytorch_grad_cam.utils.find_layers import find_layer_types_recursive
     # find_layer_types_recursive(model, [torch.nn.ReLU])
     
-    target_layers = [model.layer4]
+    # target_layers = [model.layer4[2].conv3]
+    target_layers = [model.features[8][0]]
 
     rgb_img = cv2.imread(args.image_path, 1)[:, :, ::-1]
     rgb_img = np.float32(rgb_img) / 255
@@ -104,41 +107,42 @@ if __name__ == '__main__':
     # If targets is None, the highest scoring category (for every member in the batch) will be used.
     # You can target specific categories by
     # targets = [ClassifierOutputTarget(281)]
-    # targets = [ClassifierOutputTarget(281)]
-    targets = None
+    targets = [ClassifierOutputTarget(281)]
+    # targets = None
+    for  method_ in methods:
+        args.method = method_
+        # Using the with statement ensures the context is freed, and you can
+        # recreate different CAM objects in a loop.
+        cam_algorithm = methods[args.method]
+        with cam_algorithm(model=model,
+                           target_layers=target_layers) as cam:
 
-    # Using the with statement ensures the context is freed, and you can
-    # recreate different CAM objects in a loop.
-    cam_algorithm = methods[args.method]
-    with cam_algorithm(model=model,
-                       target_layers=target_layers) as cam:
+            # AblationCAM and ScoreCAM have batched implementations.
+            # You can override the internal batch size for faster computation.
+            cam.batch_size = 32
+            grayscale_cam = cam(input_tensor=input_tensor,
+                                targets=targets,
+                                aug_smooth=args.aug_smooth,
+                                eigen_smooth=args.eigen_smooth)
 
-        # AblationCAM and ScoreCAM have batched implementations.
-        # You can override the internal batch size for faster computation.
-        cam.batch_size = 32
-        grayscale_cam = cam(input_tensor=input_tensor,
-                            targets=targets,
-                            aug_smooth=args.aug_smooth,
-                            eigen_smooth=args.eigen_smooth)
+            grayscale_cam = grayscale_cam[0, :]
 
-        grayscale_cam = grayscale_cam[0, :]
+            cam_image = show_cam_on_image(rgb_img, grayscale_cam, use_rgb=True)
+            cam_image = cv2.cvtColor(cam_image, cv2.COLOR_RGB2BGR)
 
-        cam_image = show_cam_on_image(rgb_img, grayscale_cam, use_rgb=True)
-        cam_image = cv2.cvtColor(cam_image, cv2.COLOR_RGB2BGR)
+        gb_model = GuidedBackpropReLUModel(model=model, device=args.device)
+        gb = gb_model(input_tensor, target_category=None)
 
-    gb_model = GuidedBackpropReLUModel(model=model, device=args.device)
-    gb = gb_model(input_tensor, target_category=None)
+        cam_mask = cv2.merge([grayscale_cam, grayscale_cam, grayscale_cam])
+        cam_gb = deprocess_image(cam_mask * gb)
+        gb = deprocess_image(gb)
 
-    cam_mask = cv2.merge([grayscale_cam, grayscale_cam, grayscale_cam])
-    cam_gb = deprocess_image(cam_mask * gb)
-    gb = deprocess_image(gb)
+        os.makedirs(args.output_dir, exist_ok=True)
 
-    os.makedirs(args.output_dir, exist_ok=True)
+        cam_output_path = os.path.join(args.output_dir, f'{args.method}_cam.jpg')
+        gb_output_path = os.path.join(args.output_dir, f'{args.method}_gb.jpg')
+        cam_gb_output_path = os.path.join(args.output_dir, f'{args.method}_cam_gb.jpg')
 
-    cam_output_path = os.path.join(args.output_dir, f'{args.method}_cam.jpg')
-    gb_output_path = os.path.join(args.output_dir, f'{args.method}_gb.jpg')
-    cam_gb_output_path = os.path.join(args.output_dir, f'{args.method}_cam_gb.jpg')
-
-    cv2.imwrite(cam_output_path, cam_image)
-    cv2.imwrite(gb_output_path, gb)
-    cv2.imwrite(cam_gb_output_path, cam_gb)
+        cv2.imwrite(cam_output_path, cam_image)
+        cv2.imwrite(gb_output_path, gb)
+        cv2.imwrite(cam_gb_output_path, cam_gb)

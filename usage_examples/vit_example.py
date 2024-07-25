@@ -4,6 +4,7 @@ import numpy as np
 import torch
 
 from pytorch_grad_cam import GradCAM, \
+    ShapleyCAM, \
     ScoreCAM, \
     GradCAMPlusPlus, \
     AblationCAM, \
@@ -21,12 +22,12 @@ from pytorch_grad_cam.ablation_layer import AblationLayerVit
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--use-cuda', action='store_true', default=False,
+    parser.add_argument('--use-cuda', action='store_true', default=True,
                         help='Use NVIDIA GPU acceleration')
     parser.add_argument(
         '--image-path',
         type=str,
-        default='./examples/both.png',
+        default='../examples/both.png',
         help='Input image path')
     parser.add_argument('--aug_smooth', action='store_true',
                         help='Apply test time augmentation to smooth the CAM')
@@ -39,7 +40,8 @@ def get_args():
     parser.add_argument(
         '--method',
         type=str,
-        default='gradcam',
+        default='shapleycam',
+        # default='gradcam',
         help='Can be gradcam/gradcam++/scorecam/xgradcam/ablationcam')
 
     args = parser.parse_args()
@@ -71,6 +73,7 @@ if __name__ == '__main__':
     args = get_args()
     methods = \
         {"gradcam": GradCAM,
+         "shapleycam": ShapleyCAM,
          "scorecam": ScoreCAM,
          "gradcam++": GradCAMPlusPlus,
          "ablationcam": AblationCAM,
@@ -91,6 +94,7 @@ if __name__ == '__main__':
         model = model.cuda()
 
     target_layers = [model.blocks[-1].norm1]
+    # target_layers = [model.norm]
 
     if args.method not in methods:
         raise Exception(f"Method {args.method} not implemented")
@@ -98,13 +102,11 @@ if __name__ == '__main__':
     if args.method == "ablationcam":
         cam = methods[args.method](model=model,
                                    target_layers=target_layers,
-                                   use_cuda=args.use_cuda,
                                    reshape_transform=reshape_transform,
                                    ablation_layer=AblationLayerVit())
     else:
         cam = methods[args.method](model=model,
                                    target_layers=target_layers,
-                                   use_cuda=args.use_cuda,
                                    reshape_transform=reshape_transform)
 
     rgb_img = cv2.imread(args.image_path, 1)[:, :, ::-1]

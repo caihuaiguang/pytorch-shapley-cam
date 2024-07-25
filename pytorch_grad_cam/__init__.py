@@ -1,3 +1,4 @@
+from pytorch_grad_cam.shapley_cam import ShapleyCAM
 from pytorch_grad_cam.grad_cam import GradCAM
 from pytorch_grad_cam.hirescam import HiResCAM
 from pytorch_grad_cam.grad_cam_elementwise import GradCAMElementWise

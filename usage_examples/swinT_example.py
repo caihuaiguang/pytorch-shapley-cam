@@ -5,6 +5,7 @@ import torch
 import timm
 
 from pytorch_grad_cam import GradCAM, \
+    ShapleyCAM, \
     ScoreCAM, \
     GradCAMPlusPlus, \
     AblationCAM, \
@@ -26,7 +27,7 @@ def get_args():
     parser.add_argument(
         '--image-path',
         type=str,
-        default='./examples/both.png',
+        default='../examples/both.png',
         help='Input image path')
     parser.add_argument('--aug_smooth', action='store_true',
                         help='Apply test time augmentation to smooth the CAM')
@@ -39,7 +40,7 @@ def get_args():
     parser.add_argument(
         '--method',
         type=str,
-        default='scorecam',
+        default='shapleycam',
         help='Can be gradcam/gradcam++/scorecam/xgradcam/ablationcam')
 
     args = parser.parse_args()
@@ -71,6 +72,7 @@ if __name__ == '__main__':
     args = get_args()
     methods = \
         {"gradcam": GradCAM,
+         "shapleycam": ShapleyCAM,
          "scorecam": ScoreCAM,
          "gradcam++": GradCAMPlusPlus,
          "ablationcam": AblationCAM,
@@ -97,13 +99,11 @@ if __name__ == '__main__':
     if args.method == "ablationcam":
         cam = methods[args.method](model=model,
                                    target_layers=target_layers,
-                                   use_cuda=args.use_cuda,
                                    reshape_transform=reshape_transform,
                                    ablation_layer=AblationLayerVit())
     else:
         cam = methods[args.method](model=model,
                                    target_layers=target_layers,
-                                   use_cuda=args.use_cuda,
                                    reshape_transform=reshape_transform)
 
     rgb_img = cv2.imread(args.image_path, 1)[:, :, ::-1]
