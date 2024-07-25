@@ -40,8 +40,8 @@ def get_args():
     parser.add_argument(
         '--method',
         type=str,
-        default='shapleycam',
-        # default='gradcam',
+        # default='shapleycam',
+        default='gradcam',
         help='Can be gradcam/gradcam++/scorecam/xgradcam/ablationcam')
 
     args = parser.parse_args()
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     if args.use_cuda:
         model = model.cuda()
 
-    target_layers = [model.blocks[-1].norm1]
+    target_layers = [model.blocks[-2].norm1]
     # target_layers = [model.norm]
 
     if args.method not in methods:
@@ -132,4 +132,4 @@ if __name__ == '__main__':
     grayscale_cam = grayscale_cam[0, :]
 
     cam_image = show_cam_on_image(rgb_img, grayscale_cam)
-    cv2.imwrite(f'{args.method}_cam.jpg', cam_image)
+    cv2.imwrite(f'{args.method}_cam_2.jpg', cam_image)

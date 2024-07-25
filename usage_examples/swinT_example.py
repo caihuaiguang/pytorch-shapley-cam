@@ -8,6 +8,7 @@ from pytorch_grad_cam import GradCAM, \
     ShapleyCAM, \
     ScoreCAM, \
     GradCAMPlusPlus, \
+    GradCAMElementWise, \
     AblationCAM, \
     XGradCAM, \
     EigenCAM, \
@@ -22,7 +23,7 @@ from pytorch_grad_cam.ablation_layer import AblationLayerVit
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--use-cuda', action='store_true', default=False,
+    parser.add_argument('--use-cuda', action='store_true', default=True,
                         help='Use NVIDIA GPU acceleration')
     parser.add_argument(
         '--image-path',
@@ -40,7 +41,8 @@ def get_args():
     parser.add_argument(
         '--method',
         type=str,
-        default='shapleycam',
+        default='gradcam',
+        # default='shapleycam',
         help='Can be gradcam/gradcam++/scorecam/xgradcam/ablationcam')
 
     args = parser.parse_args()
@@ -73,6 +75,7 @@ if __name__ == '__main__':
     methods = \
         {"gradcam": GradCAM,
          "shapleycam": ShapleyCAM,
+         "gradcamelementwise": GradCAMElementWise,
          "scorecam": ScoreCAM,
          "gradcam++": GradCAMPlusPlus,
          "ablationcam": AblationCAM,
