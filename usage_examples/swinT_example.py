@@ -128,4 +128,4 @@ if __name__ == '__main__':
     grayscale_cam = grayscale_cam[0, :]
 
     cam_image = show_cam_on_image(rgb_img, grayscale_cam)
-    cv2.imwrite(f'{args.method}_cam.jpg', cam_image)
+    cv2.imwrite(f'{args.method}_cam_SwinT.jpg', cam_image)

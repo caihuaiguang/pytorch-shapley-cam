@@ -13,6 +13,7 @@ class GradCAM(BaseCAM):
             target_layers,
             reshape_transform)
 
+
     def get_cam_weights(self,
                         input_tensor,
                         target_layer,
@@ -21,7 +22,8 @@ class GradCAM(BaseCAM):
                         grads):
         # 2D image
         if len(grads.shape) == 4:
-            return np.mean(grads, axis=(2, 3))
+            return self.compute_normalized_product(grads*activations, grads)
+            # return np.mean(grads, axis=(2, 3))
         
         # 3D image
         elif len(grads.shape) == 5:

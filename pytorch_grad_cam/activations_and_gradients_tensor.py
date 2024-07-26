@@ -4,8 +4,8 @@ class ActivationsAndGradientstensor:
 
     def __init__(self, model, target_layers, reshape_transform):
         self.model = model
-        self.gradients = []
-        self.activations = []
+        # self.gradients = []
+        # self.activations = []
         self.original_gradients = []
         self.original_activations = []
         self.reshape_transform = reshape_transform
@@ -22,10 +22,10 @@ class ActivationsAndGradientstensor:
         activation = output
 
         self.original_activations.append(activation)
-        if self.reshape_transform is not None:
-            activation = self.reshape_transform(activation)
-        # self.activations.append(activation.cpu().detach())
-        self.activations.append(activation)
+        # if self.reshape_transform is not None:
+        #     activation = self.reshape_transform(activation)
+        # # self.activations.append(activation.cpu().detach())
+        # self.activations.append(activation)
 
     def save_gradient(self, module, input, output):
         if not hasattr(output, "requires_grad") or not output.requires_grad:
@@ -35,15 +35,17 @@ class ActivationsAndGradientstensor:
         # Gradients are computed in reverse order
         def _store_grad(grad):
             self.original_gradients = [grad] + self.original_gradients
-            if self.reshape_transform is not None:
-                grad = self.reshape_transform(grad)
-            self.gradients = [grad] + self.gradients
+            # if self.reshape_transform is not None:
+            #     grad = self.reshape_transform(grad)
+            # self.gradients = [grad] + self.gradients
 
         output.register_hook(_store_grad)
 
     def __call__(self, x):
-        self.gradients = []
-        self.activations = []
+        # self.gradients = []
+        # self.activations = []
+        self.original_gradients = []
+        self.original_activations = []
         return self.model(x)
 
     def release(self):

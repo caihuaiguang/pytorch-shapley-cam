@@ -197,3 +197,28 @@ class BaseCAM:
             # Handle IndexError here...
             print(f"An exception occurred in CAM with block: {exc_type}. Message: {exc_value}")
             return True
+    def compute_normalized_product(self, a, b, eps=1e-7):
+        # Ensure a and b are numpy arrays
+        a = np.array(a)
+        b = np.array(b)
+        if len(a.shape) == 4:
+            axis_ = (2, 3)
+        elif len(a.shape) == 5:
+            axis_ = (2, 3, 4)
+        
+        # Check that a and b have the same shape
+        assert a.shape == b.shape, "a and b must have the same shape"
+        
+        # Calculate the element-wise product of a and b
+        elementwise_product = a * b  # Shape: (N, C, H, W)
+        
+        # Calculate the L2 norm squared of b along the H and W dimensions
+        b_l2_squared = np.sum(b ** 2, axis=axis_) + eps  # Shape: (N, C)
+        
+        # Calculate the sum of elementwise_product along the H and W dimensions
+        product_sum = np.sum(elementwise_product, axis=axis_)  # Shape: (N, C)
+        
+        # Calculate the final result
+        result = product_sum / b_l2_squared  # Shape: (N, C)
+        
+        return result
