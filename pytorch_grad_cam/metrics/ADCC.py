@@ -12,26 +12,23 @@ import cv2
 def complexity(saliency_map):
     return abs(saliency_map).sum()/(saliency_map.shape[-1]*saliency_map.shape[-2])
 
-def coherency(saliency_map, explanation_map, attr_method, targets):
+def coherency(A, explanation_map, attr_method, targets):
 
-    saliency_map_B=attr_method(explanation_map, targets)
-
-    A, B = saliency_map.detach(), saliency_map_B.detach()
+    B=attr_method(torch.tensor(explanation_map), targets)[0]
 
     '''
     # Pearson correlation coefficient
     # '''
-    Asq, Bsq = A.view(1, -1).squeeze(0).cpu(), B.view(1, -1).squeeze(0).cpu()
-
+    Asq = A.flatten()
+    Bsq = B.flatten()
+    
     import os
     os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
-
-    if torch.tensor(Asq).isnan().any() or torch.tensor(Bsq).isnan().any():
+    if np.isnan(Asq).any() or np.isnan(Bsq).any() or np.std(Bsq) == 0 or np.std(Asq) == 0:
         y = 0.
     else:
         y, _ = STS.pearsonr(Asq, Bsq)
         y = (y + 1) / 2
-
     return y,A,B
 
 
@@ -67,13 +64,14 @@ class ADCC:
             target(output).cpu().numpy() for target, output in zip(
                 targets, outputs_after_imputation)]
         scores_after_imputation = np.float32(scores_after_imputation)
-
-        result = scores_after_imputation - scores
         avgdrop = max(0., scores - scores_after_imputation) / scores
         com = complexity(cam)
         coh,_,_ = coherency(cam, perturbated_tensors, cam_method, targets)
-
-        adcc = 3 / (1 / coh + 1 / (1 - com) + 1 / (1 - avgdrop))
+        
+        if coh == 0.0:
+            adcc = 0
+        else:
+            adcc = 3 / (1/coh + 1/(1-com) +1/(1-avgdrop))
 
         if return_visualization:
             return adcc, perturbated_tensors
