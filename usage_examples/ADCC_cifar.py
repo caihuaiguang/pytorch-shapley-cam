@@ -28,7 +28,7 @@ model.eval()
 
 # Define the Grad-CAM and ADCC
 target_layers = [model.layer4]
-cam = EigenGradCAM(model=model, target_layers=target_layers)
+cam = GradCAM(model=model, target_layers=target_layers)
 adcc_metric = ADCC()
 
 # Initialize ADCC sum and counter
@@ -42,7 +42,9 @@ for img, label in tqdm(test_loader, desc="Processing images", unit="image"):
 
     # Create input tensor and target
     input_tensor = img
-    targets = [ClassifierOutputTarget(label.item())]
+    pre_label = model(input_tensor).argmax()
+    # targets = [ClassifierOutputTarget(label.item())]
+    targets = None
 
     # Compute Grad-CAM
     grayscale_cams = cam(input_tensor=input_tensor, targets=targets)

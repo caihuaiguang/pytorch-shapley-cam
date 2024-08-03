@@ -9,6 +9,14 @@ import numpy as np
 from typing import List, Callable
 import cv2
 
+class ClassifierOutputTarget:
+    def __init__(self, category):
+        self.category = category
+
+    def __call__(self, model_output):
+        if len(model_output.shape) == 1:
+            return model_output[self.category]
+        return model_output[:, self.category]
 def complexity(saliency_map):
     return abs(saliency_map).sum()/(saliency_map.shape[-1]*saliency_map.shape[-2])
 
@@ -46,6 +54,10 @@ class ADCC:
 
         with torch.no_grad():
             outputs = model(input_tensor)
+
+            if targets is None:
+                target_categories = np.argmax(outputs.cpu().data.numpy(), axis=-1)
+                targets = [ClassifierOutputTarget(category) for category in target_categories]
             scores = [target(output).cpu().numpy()
                       for target, output in zip(targets, outputs)]
             scores = np.float32(scores)
