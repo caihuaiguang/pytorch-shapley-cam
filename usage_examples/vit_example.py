@@ -7,6 +7,8 @@ from pytorch_grad_cam import GradCAM, \
     ShapleyCAM, \
     ScoreCAM, \
     GradCAMPlusPlus, \
+    GradCAMElementWise, \
+    HiResCAM, \
     AblationCAM, \
     XGradCAM, \
     EigenCAM, \
@@ -75,6 +77,8 @@ if __name__ == '__main__':
         {"gradcam": GradCAM,
          "shapleycam": ShapleyCAM,
          "scorecam": ScoreCAM,
+         "gradcamelementwise": GradCAMElementWise,
+         "hirescam": HiResCAM,
          "gradcam++": GradCAMPlusPlus,
          "ablationcam": AblationCAM,
          "xgradcam": XGradCAM,
@@ -132,4 +136,4 @@ if __name__ == '__main__':
     grayscale_cam = grayscale_cam[0, :]
 
     cam_image = show_cam_on_image(rgb_img, grayscale_cam)
-    cv2.imwrite(f'{args.method}_cam_ViT.jpg', cam_image)
+    cv2.imwrite(f'{args.method}_cam_ViT_relu.jpg', cam_image)

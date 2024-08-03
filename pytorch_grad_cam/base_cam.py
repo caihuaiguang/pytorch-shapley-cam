@@ -91,6 +91,11 @@ class BaseCAM:
 
         if targets is None:
             target_categories = np.argmax(outputs.cpu().data.numpy(), axis=-1)
+            print(target_categories)
+            print(outputs.cpu().data.numpy().shape)
+            # print(np.sort(outputs.cpu().data.numpy()[0]))
+            top_k_idx=outputs[0].cpu().data.numpy().argsort()[::-1][0:5]
+            print(top_k_idx)
             targets = [ClassifierOutputTarget(category) for category in target_categories]
 
         if self.uses_gradients:
@@ -197,7 +202,7 @@ class BaseCAM:
             # Handle IndexError here...
             print(f"An exception occurred in CAM with block: {exc_type}. Message: {exc_value}")
             return True
-    def compute_normalized_product(self, a, b, eps=1e-7):
+    def compute_normalized_product(self, a, b, eps=1e-14):
         # Ensure a and b are numpy arrays
         a = np.array(a)
         b = np.array(b)
@@ -220,5 +225,9 @@ class BaseCAM:
         
         # Calculate the final result
         result = product_sum / b_l2_squared  # Shape: (N, C)
-        
+        print(np.sum((a-result[:,:,  None,None]*b) ** 2, axis=axis_)/np.sum(b ** 2, axis=axis_))
+        print("a_norm", np.sum(a ** 2, axis=axis_))
+        print("b_norm", np.sum(b ** 2, axis=axis_))
+        print("c_norm", np.sum((a-result[:,:,  None,None]*b) ** 2, axis=axis_))
+        print("wi", result)
         return result
