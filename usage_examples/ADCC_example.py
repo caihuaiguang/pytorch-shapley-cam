@@ -24,7 +24,7 @@ input_tensor = preprocess_image(img, mean=[0.485, 0.456, 0.406], std=[0.229, 0.2
 # before softmax, for that category.
 targets = [ClassifierOutputTarget(295)]
 target_layers = [model.layer4]
-with XGradCAM(model=model, target_layers=target_layers) as cam:
+with GradCAMElementWise(model=model, target_layers=target_layers) as cam:
     grayscale_cams = cam(input_tensor=input_tensor, targets=targets)
     cam_image = show_cam_on_image(img, grayscale_cams[0, :], use_rgb=True)
     print("ADCC", ADCC()(input_tensor,grayscale_cams,targets,model, cam))

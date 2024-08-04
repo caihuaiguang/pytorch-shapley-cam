@@ -1,5 +1,3 @@
-# https://github.com/aimagelab/ADCC/
-
 from scipy.linalg import norm
 from scipy import stats as STS
 import torch
@@ -9,28 +7,27 @@ import numpy as np
 from typing import List, Callable
 import cv2
 
+
 def complexity(saliency_map):
-    return abs(saliency_map).sum()/(saliency_map.shape[-1]*saliency_map.shape[-2])
+    return abs(saliency_map).sum(axis=(1, 2)) / (saliency_map.shape[-1] * saliency_map.shape[-2])
+
 
 def coherency(A, explanation_map, attr_method, targets):
+    B = attr_method(torch.tensor(explanation_map), targets)
 
-    B=attr_method(torch.tensor(explanation_map), targets)[0]
+    Asq = A.reshape((A.shape[0], -1))
+    Bsq = B.reshape((B.shape[0], -1))
 
-    '''
-    # Pearson correlation coefficient
-    # '''
-    Asq = A.flatten()
-    Bsq = B.flatten()
-    
-    import os
-    os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
-    if np.isnan(Asq).any() or np.isnan(Bsq).any() or np.std(Bsq) == 0 or np.std(Asq) == 0:
-        y = 0.
-    else:
-        y, _ = STS.pearsonr(Asq, Bsq)
-        y = (y + 1) / 2
-    return y,A,B
+    y = np.zeros(A.shape[0])
 
+    for i in range(Asq.shape[0]):
+        if np.isnan(Asq[i]).any() or np.isnan(Bsq[i]).any() or np.std(Bsq[i]) == 0 or np.std(Asq[i]) == 0:
+            y[i] = 0.0
+        else:
+            y[i], _ = STS.pearsonr(Asq[i], Bsq[i])
+            y[i] = (y[i] + 1) / 2
+
+    return y, A, B
 
 
 class ADCC:
@@ -43,38 +40,32 @@ class ADCC:
                  model: torch.nn.Module,
                  cam_method,
                  return_visualization=False):
-
         with torch.no_grad():
             outputs = model(input_tensor)
-            scores = [target(output).cpu().numpy()
-                      for target, output in zip(targets, outputs)]
-            scores = np.float32(scores)
+            scores = np.float32([target(output).cpu().numpy() for target, output in zip(targets, outputs)])
 
         perturbated_tensors = []
-        cam = cams[0]
-        tensor = self.perturbation(input_tensor[0, ...].cpu(),
-                                   torch.from_numpy(cam))
-        tensor = tensor.to(input_tensor.device)
-        perturbated_tensors.append(tensor.unsqueeze(0))
+        for i in range(cams.shape[0]):
+            cam = cams[i]
+            tensor = self.perturbation(input_tensor[i, ...].cpu(), torch.from_numpy(cam))
+            tensor = tensor.to(input_tensor.device)
+            perturbated_tensors.append(tensor.unsqueeze(0))
         perturbated_tensors = torch.cat(perturbated_tensors)
 
         with torch.no_grad():
             outputs_after_imputation = model(perturbated_tensors)
-        scores_after_imputation = [
-            target(output).cpu().numpy() for target, output in zip(
-                targets, outputs_after_imputation)]
-        scores_after_imputation = np.float32(scores_after_imputation)
-        avgdrop = max(0., scores - scores_after_imputation) / scores
-        com = complexity(cam)
-        coh,_,_ = coherency(cam, perturbated_tensors, cam_method, targets)
-        
-        if coh == 0.0:
-            adcc = 0
+        scores_after_imputation = np.float32(
+            [target(output).cpu().numpy() for target, output in zip(targets, outputs_after_imputation)])
+
+        avgdrop = np.maximum(0., scores - scores_after_imputation) / scores
+        com = complexity(cams)
+        coh, _, _ = coherency(cams, perturbated_tensors, cam_method, targets)
+        if np.all(coh == 0.0):
+            adcc = np.zeros(coh.shape[0])
         else:
-            adcc = 3 / (1/coh + 1/(1-com) +1/(1-avgdrop))
+            adcc = 3 / (1 / coh + 1 / (1 - com) + 1 / (1 - avgdrop))
 
         if return_visualization:
             return adcc, perturbated_tensors
         else:
-            return adcc
-        
+            return adcc, avgdrop, coh, com
