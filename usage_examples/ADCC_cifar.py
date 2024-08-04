@@ -26,11 +26,7 @@ model.eval()
 
 # Define the Grad-CAM and ADCC
 target_layers = [model.layer4]
-<<<<<<< HEAD
 cam = ScoreCAM(model=model, target_layers=target_layers)  # You can switch to other CAM methods
-=======
-cam = GradCAM(model=model, target_layers=target_layers)
->>>>>>> a20ca36ae248c5e2af18f9e1db972ea6143a174a
 adcc_metric = ADCC()
 
 # Initialize sums and counters for metrics
@@ -47,17 +43,10 @@ for imgs, labels in tqdm(test_loader, desc="Processing images", unit="batch"):
     labels = labels.to(device)
 
     # Create input tensor and target
-<<<<<<< HEAD
     input_tensor = imgs
     outputs = model(input_tensor)
     target_categories = np.argmax(outputs.cpu().data.numpy(), axis=-1)
     targets = [ClassifierOutputSoftmaxTarget(category) for category in target_categories]
-=======
-    input_tensor = img
-    pre_label = model(input_tensor).argmax()
-    # targets = [ClassifierOutputTarget(label.item())]
-    targets = None
->>>>>>> a20ca36ae248c5e2af18f9e1db972ea6143a174a
 
     # Compute Grad-CAM
     grayscale_cams = cam(input_tensor=input_tensor, targets=targets)

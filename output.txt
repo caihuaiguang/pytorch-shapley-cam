@@ -1,0 +1,36 @@
+Model: resnet50, CAM Method: gradcamplusplus, Target Layer: layer4, Batch Size: 64
+Average ADCC: 0.7575686880502601
+Average AvgDrop: 0.14144896478176117
+Average Coherency: 0.9699933800393179
+Average Complexity: 0.3616204576206207
+
+Model: resnet50, CAM Method: gradcamelementwise, Target Layer: layer4, Batch Size: 64
+Average ADCC: 0.6974954555708356
+Average AvgDrop: 0.23497858144044875
+Average Coherency: 0.8442591409180127
+Average Complexity: 0.2560667047405243
+
+Model: resnet50, CAM Method: gradcamelementwise, Target Layer: layer4, Batch Size: 192
+Average ADCC: 0.6974789643347059
+Average AvgDrop: 0.23497835388183594
+Average Coherency: 0.8442448077593422
+Average Complexity: 0.2560666162109375
+
+Model: resnet50, CAM Method: hirescam, Target Layer: layer4, Batch Size: 128
+Average ADCC: 0.6975249312532249
+Average AvgDrop: 0.2349598010635376
+Average Coherency: 0.8443243374124632
+Average Complexity: 0.25606633625030517
+
+Model: resnet50, CAM Method: hirescam, Target Layer: layer4, Batch Size: 128
+Average ADCC: 0.6975249312532249
+Average AvgDrop: 0.2349598010635376
+Average Coherency: 0.8443243374124632
+Average Complexity: 0.25606633625030517
+
+Model: resnet50, CAM Method: gradcam, Target Layer: layer4, Batch Size: 192
+Average ADCC: 0.6974806300648508
+Average AvgDrop: 0.2349760054779053
+Average Coherency: 0.8442450873639697
+Average Complexity: 0.2560666167259216
+

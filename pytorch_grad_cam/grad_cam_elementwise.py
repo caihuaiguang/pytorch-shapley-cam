@@ -28,7 +28,8 @@ class GradCAMElementWise(BaseCAM):
         scale_factor = np.minimum(1, np.abs(w_mean)/(k*(w_std+1e-9)))
         weight = w_mean + scale_factor * (weight-w_mean)
         grads = weight
-        elementwise_activations = np.maximum(grads * activations, 0)
+        elementwise_activations = grads * activations
+        # elementwise_activations = np.maximum(grads * activations, 0)
 
         if eigen_smooth:
             cam = get_2d_projection(elementwise_activations)

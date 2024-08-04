@@ -94,24 +94,23 @@ class ShapleyCAM(BaseCAM):
         #     retain_graph=False
         # )[0]
         self.activations_and_grads.release()
-        # hvp = torch.autograd.grad(
-        #     outputs=grads,
-        #     inputs=activations,
-        #     grad_outputs=activations,
-        #     retain_graph=False
-        # )[0]
+        hvp = torch.autograd.grad(
+            outputs=grads,
+            inputs=activations,
+            grad_outputs=activations,
+            retain_graph=False
+        )[0]
         if self.activations_and_grads.reshape_transform is not None:
-            # print("not None")
-            # hvp = self.activations_and_grads.reshape_transform(hvp)
+            print("not None")
+            hvp = self.activations_and_grads.reshape_transform(hvp)
             activations = self.activations_and_grads.reshape_transform(activations)
             grads = self.activations_and_grads.reshape_transform(grads)
         # print(torch.norm(hvp))
-        # weight = (grads - 0.5*hvp)
-        weight = grads
+        weight = (grads - 0.5*hvp).cpu().detach().numpy()
         # weight_flatten = torch.sum(weight * activations, dim=(2, 3))
         # weight = weight_flatten
         # print(we torch.softmax(weight, dim=-1)
-        weight = grads.cpu().detach().numpy()
+        # weight = grads.cpu().detach().numpy()
         activations = activations.cpu().detach().numpy()
         # grads = grads.cpu().detach().numpy()
         # weight = np.exp(weight*activations/activations.shape[3])
