@@ -184,6 +184,7 @@ if __name__ == "__main__":
         
         # Calculate ADCC and other metrics for the current batch
         adcc_value, avgdrop_value, coh_value, com_value = adcc_metric(input_tensor, grayscale_cams, targets, metric_targets, model, cam)
+
         # Accumulate the metrics
         batch_size = imgs.size(0)
         adcc_sum += adcc_value.sum()

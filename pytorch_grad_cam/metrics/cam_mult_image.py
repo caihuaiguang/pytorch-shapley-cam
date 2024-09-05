@@ -10,6 +10,7 @@ def multiply_tensor_with_cam(input_tensor: torch.Tensor,
         with a pixel attribution map
     """
     return input_tensor * cam
+    # return (input_tensor + cam)/2
 
 
 class CamMultImageConfidenceChange(PerturbationConfidenceMetric):

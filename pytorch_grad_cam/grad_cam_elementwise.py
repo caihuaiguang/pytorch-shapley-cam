@@ -21,15 +21,16 @@ class GradCAMElementWise(BaseCAM):
                       grads,
                       eigen_smooth):
         
-        weight = grads
-        k = 3
-        w_mean = np.mean(weight, axis=(2, 3), keepdims=True)
-        w_std = np.std(weight, axis=(2, 3), keepdims=True)
-        scale_factor = np.minimum(1, np.abs(w_mean)/(k*(w_std+1e-9)))
-        weight = w_mean + scale_factor * (weight-w_mean)
-        grads = weight
-        elementwise_activations = grads * activations
-        # elementwise_activations = np.maximum(grads * activations, 0)
+        # weight = grads
+        # k = 3
+        # w_mean = np.mean(weight, axis=(2, 3), keepdims=True)
+        # w_std = np.std(weight, axis=(2, 3), keepdims=True)
+        # scale_factor = np.minimum(1, np.abs(w_mean)/(k*(w_std+1e-9)))
+        # weight = w_mean + scale_factor * (weight-w_mean)
+        # # weight = np.clip(weight, -k*w_std+w_mean, k*w_std+w_mean)
+        # grads = weight
+        # elementwise_activations = grads * activations
+        elementwise_activations = np.maximum(grads * activations, 0)
 
         if eigen_smooth:
             cam = get_2d_projection(elementwise_activations)

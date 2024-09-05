@@ -1,0 +1,75 @@
+\begin{table*}[htbp]
+\small
+\setlength{\tabcolsep}{.25em}
+\centering
+\caption{Evaluation of different CAM-based approaches with existing and proposed metrics on six different backbones.}
+\label{tab:results}
+\begin{tabular}{l cccc c cccc c}
+\hline
+& \multicolumn{4}{c}{\textbf{ResNet-18}} & & \multicolumn{4}{c}{\textbf{ResNet-50}} \\
+\cline{2-5} \cline{7-10}
+\textbf{Method} & Avg Drop $\downarrow$ & Coherency $\uparrow$ & Complexity $\downarrow$ & \textbf{ADCC} $\uparrow$ & & Avg Drop $\downarrow$ & Coherency $\uparrow$ & Complexity $\downarrow$ & \textbf{ADCC} $\uparrow$ \\
+\hline
+RandomCAM & 67.70 & 50.47 & \textbf{20.79} & 27.66 & & 64.03 & 52.59 & \textbf{20.22} & 30.27 \\
+GradCAM & 30.90 & 81.45 & 25.65 & 64.91 & & 26.39 & 82.46 & 25.39 & 67.83 \\
+HiResCAM & 32.67 & 81.62 & 24.40 & 64.18 & & 27.67 & 83.11 & 24.24 & 67.39 \\
+GradCAM++ & 27.34 & 97.10 & 27.50 & 71.69 & & 20.83 & 95.49 & 28.77 & 74.41 \\
+XGradCAM & 58.81 & 57.23 & \underline{22.48} & 38.41 & & 50.63 & 58.42 & \underline{22.41} & 43.72 \\
+LayerCAM & 21.71 & 98.46 & 34.62 & 73.41 & & 18.12 & 96.85 & 33.94 & 74.80 \\
+$\text{GradCAM}_{E}$ & \textbf{20.67} & \underline{98.50} & 35.76 & \underline{73.65} & & \textbf{16.61} & \underline{97.29} & 35.64 & \underline{75.13} \\
+ShapleyCAM & \underline{20.68} & \textbf{98.53} & 35.68 & \textbf{73.68} & & \underline{16.66} & \textbf{97.32} & 35.53 & \textbf{75.14} \\
+\hline
+& \multicolumn{4}{c}{\textbf{ResNet-101}} & & \multicolumn{4}{c}{\textbf{ResNeXt-50}} \\
+\cline{2-5} \cline{7-10}
+\textbf{Method} & Avg Drop $\downarrow$ & Coherency $\uparrow$ & Complexity $\downarrow$ & \textbf{ADCC} $\uparrow$ & & Avg Drop $\downarrow$ & Coherency $\uparrow$ & Complexity $\downarrow$ & \textbf{ADCC} $\uparrow$ \\
+\hline
+RandomCAM & 62.54 & 53.36 & \textbf{20.32} & 30.88 & & 61.80 & 47.74 & \textbf{21.40} & 28.80 \\
+GradCAM & 24.74 & 81.34 & 27.22 & 67.17 & & 24.01 & 81.62 & 28.20 & 67.20 \\
+HiResCAM & 25.97 & 81.88 & 26.09 & 66.74 & & 25.20 & 81.75 & 27.35 & 66.52 \\
+GradCAM++ & 17.04 & 95.41 & 32.96 & \textbf{74.69} & & 21.09 & 93.99 & 29.43 & 72.33 \\
+XGradCAM & 46.85 & 59.07 & \underline{23.20} & 45.91 & & 44.06 & 58.64 & \underline{25.16} & 46.18 \\
+LayerCAM & 15.19 & 96.85 & 38.36 & 74.17 & & 16.53 & \underline{96.98} & 34.30 & \textbf{75.22} \\
+$\text{GradCAM}_{E}$ & \textbf{14.36} & \underline{97.57} & 39.34 & 74.43 & & \underline{14.56} & 96.97 & 37.72 & 74.84 \\
+ShapleyCAM & \underline{14.40} & \textbf{97.59} & 39.23 & \underline{74.45} & & \textbf{14.52} & \textbf{97.02} & 37.72 & \underline{74.88} \\
+\hline
+& \multicolumn{4}{c}{\textbf{Swin-T}} & & \multicolumn{4}{c}{\textbf{Swin-S}} \\
+\cline{2-5} \cline{7-10}
+\textbf{Method} & Avg Drop $\downarrow$ & Coherency $\uparrow$ & Complexity $\downarrow$ & \textbf{ADCC} $\uparrow$ & & Avg Drop $\downarrow$ & Coherency $\uparrow$ & Complexity $\downarrow$ & \textbf{ADCC} $\uparrow$ \\
+\hline
+RandomCAM & 68.09 & 54.75 & 19.38 & 33.35 & & 64.61 & 53.43 & 20.68 & 35.26 \\
+GradCAM & 82.25 & 53.83 & 16.92 & 18.91 & & 83.56 & 55.64 & 19.10 & 19.59 \\
+HiResCAM & 82.78 & 66.84 & \underline{9.05} & 22.25 & & 85.71 & 62.99 & \textbf{9.17} & 18.74 \\
+GradCAM++ & 75.13 & 54.58 & 9.99 & 24.96 & & 57.85 & 58.27 & 37.05 & 39.91 \\
+XGradCAM & 72.81 & 55.74 & 16.59 & 30.19 & & 71.85 & 53.76 & 17.28 & 30.25 \\
+LayerCAM & 82.12 & 65.64 & \textbf{8.02} & 22.79 & & 86.67 & 60.79 & \underline{10.70} & 17.57 \\
+$\text{GradCAM}_{E}$ & \underline{49.23} & \textbf{87.12} & 19.79 & \underline{61.01} & & \underline{41.50} & \textbf{84.84} & 21.53 & \underline{64.59} \\
+ShapleyCAM & \textbf{48.45} & \underline{87.07} & 19.50 & \textbf{61.53} & & \textbf{39.48} & \underline{84.12} & 20.48 & \textbf{65.59} \\
+\hline
+& \multicolumn{4}{c}{\textbf{Swin-B}} & & \multicolumn{4}{c}{\textbf{VGG-16}} \\
+\cline{2-5} \cline{7-10}
+\textbf{Method} & Avg Drop $\downarrow$ & Coherency $\uparrow$ & Complexity $\downarrow$ & \textbf{ADCC} $\uparrow$ & & Avg Drop $\downarrow$ & Coherency $\uparrow$ & Complexity $\downarrow$ & \textbf{ADCC} $\uparrow$ \\
+\hline
+RandomCAM & 65.16 & 51.79 & 22.10 & 35.16 & & 67.43 & 61.04 & \textbf{16.43} & 32.72 \\
+GradCAM & 83.72 & 50.60 & 13.42 & 18.80 & & 35.19 & 81.02 & 18.78 & 63.77 \\
+HiResCAM & 85.38 & 59.18 & \underline{9.69} & 20.02 & & 35.95 & 80.44 & \underline{18.12} & 63.55 \\
+GradCAM++ & 69.65 & 49.52 & 25.03 & 30.78 & & 22.57 & 94.63 & 24.55 & 75.35 \\
+XGradCAM & 68.94 & 53.68 & 19.18 & 34.52 & & 32.95 & 80.94 & 19.27 & 65.16 \\
+LayerCAM & 88.00 & 55.16 & \textbf{8.61} & 16.04 & & 19.66 & \underline{96.22} & 26.86 & \underline{77.15} \\
+$\text{GradCAM}_{E}$ & \textbf{44.49} & \underline{81.84} & 20.62 & \textbf{62.13} & & \underline{19.66} & 96.22 & 26.86 & 77.15 \\
+ShapleyCAM & \underline{45.18} & \textbf{82.07} & 20.32 & \underline{61.75} & & \textbf{19.51} & \textbf{96.26} & 26.95 & \textbf{77.25} \\
+\hline
+& \multicolumn{4}{c}{\textbf{EfficientNet-B0}} & & \multicolumn{4}{c}{\textbf{MobileNetV2}} \\
+\cline{2-5} \cline{7-10}
+\textbf{Method} & Avg Drop $\downarrow$ & Coherency $\uparrow$ & Complexity $\downarrow$ & \textbf{ADCC} $\uparrow$ & & Avg Drop $\downarrow$ & Coherency $\uparrow$ & Complexity $\downarrow$ & \textbf{ADCC} $\uparrow$ \\
+\hline
+RandomCAM & 64.71 & 58.23 & \textbf{18.92} & 33.05 & & 67.67 & 54.28 & \textbf{20.18} & 29.31 \\
+GradCAM & 21.16 & 87.09 & 29.97 & 70.76 & & 29.73 & 82.19 & 26.73 & 65.34 \\
+HiResCAM & 22.78 & 90.22 & 24.45 & 73.71 & & 30.49 & 81.85 & 26.67 & 64.35 \\
+GradCAM++ & \textbf{17.47} & 92.63 & 37.76 & 72.80 & & 19.50 & 97.73 & 36.21 & \textbf{73.54} \\
+XGradCAM & 54.08 & 62.93 & \underline{21.99} & 43.70 & & 63.15 & 57.14 & \underline{21.02} & 36.12 \\
+LayerCAM & 20.42 & \underline{98.19} & 30.17 & \underline{76.16} & & 15.75 & \underline{98.75} & 45.58 & 71.04 \\
+$\text{GradCAM}_{E}$ & \underline{20.10} & \textbf{98.23} & 30.62 & \textbf{76.16} & & \underline{15.75} & 98.75 & 45.58 & 71.04 \\
+ShapleyCAM & 22.18 & 97.75 & 30.25 & 74.96 & & \textbf{15.71} & \textbf{98.78} & 45.62 & \underline{71.06} \\
+\hline
+\end{tabular}
+\end{table*}

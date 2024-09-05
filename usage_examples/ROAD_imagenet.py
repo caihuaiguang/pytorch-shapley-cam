@@ -11,6 +11,7 @@ from torch.utils.data import DataLoader, Subset, random_split
 from tqdm import tqdm
 import argparse
 import timm
+from pytorch_grad_cam.metrics.road import ROADCombined
 
 def vit_reshape_transform(tensor, height=14, width=14):
     result = tensor[:, 1:, :].reshape(tensor.size(0),
@@ -22,7 +23,6 @@ def vit_reshape_transform(tensor, height=14, width=14):
     return result
 
 def swint_reshape_transform(tensor, height=7, width=7):
-    ## norm 2
     # result = tensor.reshape(tensor.size(0),
     #                         height, width, tensor.size(2))
 
@@ -30,7 +30,6 @@ def swint_reshape_transform(tensor, height=7, width=7):
     # # like in CNNs.
     # result = result.transpose(2, 3).transpose(1, 2)
 
-    ## norm1
     
     result = tensor.transpose(2, 3).transpose(1, 2)
     return result
@@ -44,6 +43,7 @@ def get_args():
     parser.add_argument('--output-file', type=str, default='output.txt', help='Output file to append results')
     return parser.parse_args()
 
+
 def load_model(model_name):
     if model_name == 'resnet18':
         model = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
@@ -52,7 +52,7 @@ def load_model(model_name):
     elif model_name == 'resnet101':
         model = models.resnet101(weights=models.ResNet101_Weights.IMAGENET1K_V1)
     elif model_name == 'resnext50':
-        model = models.resnext50_32x4d(weights=models.ResNeXt50_32X4D_Weights.IMAGENET1K_V1)
+        model = models.resnext50_32x4d(pretrained=True)
     elif model_name == 'vgg16':
         model = models.vgg16(pretrained=True)
     elif model_name == 'vit':
@@ -66,7 +66,7 @@ def load_model(model_name):
     elif model_name == 'mobilenetv2':
         model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.IMAGENET1K_V1)
     elif model_name == "efficientnetb0":
-        model = models.efficientnet_b0(weights=models.EfficientNet_B0_Weights.IMAGENET1K_V1)
+        model = models.efficientnet_b0(pretrained=True)
     else:
         raise ValueError(f"Model {model_name} not supported")
     return model
@@ -105,11 +105,12 @@ def select_cam_method(method_name, model, model_name):
 
     else:
         raise ValueError(f"Model {model_name} not supported")
+
     
     reshape_transform = None
     if model_name == 'vit':
         reshape_transform = vit_reshape_transform
-    elif model_name in ['swint_t', 'swint_s', 'swint_b']:
+    elif model_name == 'swint':
         reshape_transform = swint_reshape_transform
     return methods[method_name](model=model, target_layers=target_layers, reshape_transform = reshape_transform)
 
@@ -127,8 +128,7 @@ if __name__ == "__main__":
 
     # Transform for the ILSVRC2012 (ImageNet) dataset
     transform = transforms.Compose([
-        transforms.Resize(256),
-        transforms.CenterCrop(224),
+        transforms.Resize((224, 224)),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
@@ -139,8 +139,8 @@ if __name__ == "__main__":
 
 
 
-    # Calculate the size of the subset (1/10th of the total dataset)
-    subset_size = len(val_dataset) // 100
+    # Calculate the size of the subset (1/1000th of the total dataset)
+    subset_size = len(val_dataset) // 1000
     # Split the dataset into the subset and the remainder (which we discard)
     subset_dataset, _ = random_split(val_dataset, [subset_size, len(val_dataset) - subset_size])
 
@@ -148,14 +148,9 @@ if __name__ == "__main__":
     val_loader = DataLoader(subset_dataset, batch_size=args.batch_size, shuffle=False)
 
 
-    # Define the ADCC
-    adcc_metric = ADCC()
+    cam_metric = ROADCombined(percentiles=[20, 40, 60, 80])
 
-    # Initialize ADCC sum and counter
-    adcc_sum = 0.0
-    avgdrop_sum = 0.0
-    coh_sum = 0.0
-    com_sum = 0.0
+    road_sum = 0.0
     num_images = 0
 
     # Iterate over the validation dataset
@@ -165,11 +160,9 @@ if __name__ == "__main__":
 
         # Create input tensor and target
         input_tensor = imgs
-
-        # use inferenced result other than ground truth
         # target_categories = labels
 
-        # Get model predictions
+                # Get model predictions
         with torch.no_grad():  # Disables gradient calculation to save memory
             outputs = model(imgs)
             target_categories = np.argmax(outputs.cpu().data.numpy(), axis=-1)
@@ -183,27 +176,19 @@ if __name__ == "__main__":
         metric_targets = [ClassifierOutputSoftmaxTarget(category) for category in target_categories]
         
         # Calculate ADCC and other metrics for the current batch
-        adcc_value, avgdrop_value, coh_value, com_value = adcc_metric(input_tensor, grayscale_cams, targets, metric_targets, model, cam)
+        score = cam_metric(input_tensor, grayscale_cams, metric_targets, model)
+
         # Accumulate the metrics
         batch_size = imgs.size(0)
-        adcc_sum += adcc_value.sum()
-        avgdrop_sum += avgdrop_value.sum()
-        coh_sum += coh_value.sum()
-        com_sum += com_value.sum()
+        road_sum += score.sum()
         num_images += batch_size
 
     # Calculate the average of all metrics over the entire validation dataset
-    average_adcc = adcc_sum / num_images
-    average_avgdrop = avgdrop_sum / num_images
-    average_coh = coh_sum / num_images
-    average_com = com_sum / num_images
+    average_road = road_sum / num_images
 
     # Prepare the output string
     output_str = (f"Model: {args.model}, CAM Method: {args.cam_method}, Batch Size: {args.batch_size}\n"
-                  f"Average ADCC: {average_adcc}\n"
-                  f"Average AvgDrop: {average_avgdrop}\n"
-                  f"Average Coherency: {average_coh}\n"
-                  f"Average Complexity: {average_com}\n\n")
+                  f"Average ROAD: {average_road}\n")
 
     # Print the results to the console
     print(output_str)
