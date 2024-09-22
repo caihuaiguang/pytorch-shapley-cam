@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8387035b-5247-4ff4-a810-ba1e3d20e686" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/cam.py" beforeDir="false" afterPath="$PROJECT_DIR$/cam.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/ablationcam_cam.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/ablationcam_cam.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/ablationcam_cam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/ablationcam_cam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/ablationcam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/ablationcam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/eigencam_cam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/eigencam_cam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/eigencam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/eigencam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/eigengradcam_cam.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/eigengradcam_cam.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/eigengradcam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/eigengradcam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/fullgrad_cam.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/fullgrad_cam.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/fullgrad_cam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/fullgrad_cam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/fullgrad_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/fullgrad_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/gradcam++_cam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/gradcam++_cam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/gradcam++_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/gradcam++_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/gradcam_cam.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/gradcam_cam.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/gradcam_cam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/gradcam_cam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/gradcamelementwise_cam.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/gradcamelementwise_cam.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/gradcamelementwise_cam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/gradcamelementwise_cam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/gradcamelementwise_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/gradcamelementwise_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/hirescam_cam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/hirescam_cam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/hirescam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/hirescam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/layercam_cam.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/layercam_cam.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/layercam_cam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/layercam_cam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/layercam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/layercam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/scorecam_cam.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/scorecam_cam.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/scorecam_cam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/scorecam_cam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/scorecam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/scorecam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/shapleycam_cam.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/shapleycam_cam.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/shapleycam_cam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/shapleycam_cam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/xgradcam_cam.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/xgradcam_cam.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/xgradcam_cam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/xgradcam_cam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output_efficientB0_2/xgradcam_gb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/output_efficientB0_2/xgradcam_gb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytorch_grad_cam/shapley_cam.py" beforeDir="false" afterPath="$PROJECT_DIR$/pytorch_grad_cam/shapley_cam.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tutorials/CAM Metrics And Tuning Tutorial.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/tutorials/CAM Metrics And Tuning Tutorial.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usage_examples/gradcam_cam_ViT_relu.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/usage_examples/gradcam_cam_ViT_relu.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/usage_examples/vit_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/usage_examples/vit_example.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2kA6ffc3AZ8cYT9VR3dPQ96aLtH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "G:/LLMEXP",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\code\pytorch-shapley-cam" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.down">
+    <configuration name="ADCC_cifar" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pytorch-shapley-cam" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/usage_examples" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/usage_examples/ADCC_cifar.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="cam" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pytorch-shapley-cam" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cam.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="down" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pytorch-shapley-cam" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/down.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="vit_example" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pytorch-shapley-cam" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/usage_examples" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/usage_examples/vit_example.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.down" />
+        <item itemvalue="Python.cam" />
+        <item itemvalue="Python.ADCC_cifar" />
+        <item itemvalue="Python.vit_example" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8387035b-5247-4ff4-a810-ba1e3d20e686" name="Changes" comment="" />
+      <created>1722714139359</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1722714139359</updated>
+      <workItem from="1722714141584" duration="3499000" />
+      <workItem from="1722723902120" duration="3967000" />
+      <workItem from="1722728207766" duration="3351000" />
+      <workItem from="1722781169946" duration="2310000" />
+      <workItem from="1722786030129" duration="1004000" />
+      <workItem from="1723304502932" duration="71000" />
+      <workItem from="1725610507350" duration="5997000" />
+      <workItem from="1726138934218" duration="45000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pytorch_grad_cam/metrics/ADCC.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pytorch_grad_cam/metrics/ADCC.py</url>
+          <line>61</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pytorch_grad_cam/shapley_cam.py</url>
+          <line>96</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/pytorch_shapley_cam$vit_example.coverage" NAME="vit_example Coverage Results" MODIFIED="1722786388225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/usage_examples" />
+    <SUITE FILE_PATH="coverage/pytorch_shapley_cam$perturbation_confidence.coverage" NAME="perturbation_confidence Coverage Results" MODIFIED="1722716792952" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pytorch_grad_cam/metrics" />
+    <SUITE FILE_PATH="coverage/pytorch_shapley_cam$cam.coverage" NAME="cam Coverage Results" MODIFIED="1725615728971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pytorch_shapley_cam$ADCC_cifar.coverage" NAME="ADCC_cifar Coverage Results" MODIFIED="1725610584317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/usage_examples" />
+    <SUITE FILE_PATH="coverage/pytorch_shapley_cam$down.coverage" NAME="down Coverage Results" MODIFIED="1725691361093" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

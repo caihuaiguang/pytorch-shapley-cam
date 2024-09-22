@@ -98,7 +98,7 @@ class ShapleyCAM(BaseCAM):
             outputs=grads,
             inputs=activations,
             grad_outputs=activations,
-            retain_graph=False
+            retain_graph=False,
         )[0]
         if self.activations_and_grads.reshape_transform is not None:
             print("not None")

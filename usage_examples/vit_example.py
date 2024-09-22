@@ -43,7 +43,7 @@ def get_args():
         '--method',
         type=str,
         # default='shapleycam',
-        default='gradcam',
+        default='shapleycam',
         help='Can be gradcam/gradcam++/scorecam/xgradcam/ablationcam')
 
     args = parser.parse_args()

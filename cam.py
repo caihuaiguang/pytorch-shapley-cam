@@ -94,7 +94,7 @@ if __name__ == '__main__':
     # find_layer_types_recursive(model, [torch.nn.ReLU])
     
     # target_layers = [model.layer4[2].conv3]
-    target_layers = [model.features[8][0]]
+    target_layers = [model.features[8][2]]
 
     rgb_img = cv2.imread(args.image_path, 1)[:, :, ::-1]
     rgb_img = np.float32(rgb_img) / 255
