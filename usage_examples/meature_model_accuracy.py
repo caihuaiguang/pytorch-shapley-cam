@@ -17,7 +17,7 @@ transform = transforms.Compose([
 
 # 加载ImageNet验证集
 val_dataset = datasets.ImageFolder('/media/caihuaiguang/data/ILSVRC2012_img_val', transform=transform)
-val_loader = DataLoader(val_dataset, batch_size=64, shuffle=False)
+val_loader = DataLoader(val_dataset, batch_size=128, shuffle=False)
 
 # 加载更大的预训练的DeiT模型, acc: 81.74%
 # model = torch.hub.load('facebookresearch/deit:main', 'deit_base_patch16_224', pretrained=True)
@@ -31,8 +31,11 @@ val_loader = DataLoader(val_dataset, batch_size=64, shuffle=False)
 # resnet 101, acc: 77.38%
 # model = models.resnet101(weights=models.ResNet101_Weights.IMAGENET1K_V1)
 
+# resnet 152, acc:78.32%
+model = models.resnet152(weights=models.ResNet152_Weights.IMAGENET1K_V1)
+
 # resnext 50, acc: 77.62%
-model = models.resnext50_32x4d(weights=models.ResNeXt50_32X4D_Weights.IMAGENET1K_V1)
+# model = models.resnext50_32x4d(weights=models.ResNeXt50_32X4D_Weights.IMAGENET1K_V1)
 
 
 # swinT_t, acc: 80.91% similar size to resnet50
@@ -43,6 +46,9 @@ model = models.resnext50_32x4d(weights=models.ResNeXt50_32X4D_Weights.IMAGENET1K
 
 # swinT_b, acc: 84.71%
 # model = timm.create_model('swin_base_patch4_window7_224', pretrained=True)
+
+# swinT_l, acc: 85.83%
+# model = timm.create_model('swin_large_patch4_window7_224', pretrained=True)
 
 
 # vgg16, acc: 71.59%

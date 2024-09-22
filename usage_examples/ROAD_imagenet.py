@@ -3,8 +3,8 @@ warnings.filterwarnings('ignore')
 from torchvision import models, datasets, transforms
 import numpy as np
 import torch
-from pytorch_grad_cam import GradCAM, GradCAMPlusPlus, GradCAMElementWise, EigenGradCAM, XGradCAM, LayerCAM, AblationCAM, RandomCAM, ShapleyCAM, HiResCAM, ScoreCAM
-from pytorch_grad_cam.utils.model_targets import ClassifierOutputSoftmaxTarget, ClassifierOutputTarget
+from pytorch_grad_cam import GradCAM, GradCAMPlusPlus, GradCAMElementWise, EigenGradCAM, XGradCAM, LayerCAM, AblationCAM, RandomCAM, ShapleyCAM,ShapleyCAM_x, ShapleyCAM_mean, ShapleyCAM_hires, HiResCAM, ScoreCAM
+from pytorch_grad_cam.utils.model_targets import ClassifierOutputSoftmaxTarget, ClassifierOutputLnSoftmaxTarget, ClassifierOutputTarget
 from pytorch_grad_cam.utils.image import preprocess_image
 from pytorch_grad_cam.metrics.ADCC import ADCC
 from torch.utils.data import DataLoader, Subset, random_split
@@ -23,6 +23,7 @@ def vit_reshape_transform(tensor, height=14, width=14):
     return result
 
 def swint_reshape_transform(tensor, height=7, width=7):
+    ## norm 2
     # result = tensor.reshape(tensor.size(0),
     #                         height, width, tensor.size(2))
 
@@ -30,10 +31,10 @@ def swint_reshape_transform(tensor, height=7, width=7):
     # # like in CNNs.
     # result = result.transpose(2, 3).transpose(1, 2)
 
+    ## norm1
     
     result = tensor.transpose(2, 3).transpose(1, 2)
     return result
-
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -43,7 +44,6 @@ def get_args():
     parser.add_argument('--output-file', type=str, default='output.txt', help='Output file to append results')
     return parser.parse_args()
 
-
 def load_model(model_name):
     if model_name == 'resnet18':
         model = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
@@ -51,8 +51,10 @@ def load_model(model_name):
         model = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1)
     elif model_name == 'resnet101':
         model = models.resnet101(weights=models.ResNet101_Weights.IMAGENET1K_V1)
+    elif model_name == 'resnet152':
+        model = models.resnet152(weights=models.ResNet152_Weights.IMAGENET1K_V1)
     elif model_name == 'resnext50':
-        model = models.resnext50_32x4d(pretrained=True)
+        model = models.resnext50_32x4d(weights=models.ResNeXt50_32X4D_Weights.IMAGENET1K_V1)
     elif model_name == 'vgg16':
         model = models.vgg16(pretrained=True)
     elif model_name == 'vit':
@@ -63,10 +65,12 @@ def load_model(model_name):
         model = timm.create_model('swin_small_patch4_window7_224', pretrained=True)
     elif model_name == 'swint_b':
         model = timm.create_model('swin_base_patch4_window7_224', pretrained=True)
+    elif model_name == 'swint_l':
+        model = timm.create_model('swin_large_patch4_window7_224', pretrained=True)
     elif model_name == 'mobilenetv2':
         model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.IMAGENET1K_V1)
     elif model_name == "efficientnetb0":
-        model = models.efficientnet_b0(pretrained=True)
+        model = models.efficientnet_b0(weights=models.EfficientNet_B0_Weights.IMAGENET1K_V1)
     else:
         raise ValueError(f"Model {model_name} not supported")
     return model
@@ -82,37 +86,46 @@ def select_cam_method(method_name, model, model_name):
         "layercam": LayerCAM,
         "ablationcam": AblationCAM,
         "shapleycam": ShapleyCAM,
+        "shapleycam_mean": ShapleyCAM_mean,
+        "shapleycam_hires": ShapleyCAM_hires,
+        "shapleycam_x": ShapleyCAM_x,
         "hirescam": HiResCAM,
         "randomcam": RandomCAM
     }
     if method_name not in methods:
         raise ValueError(f"CAM method {method_name} not supported")
     target_layers = None
-    if model_name in ['resnet50', 'resnet101', 'resnext50']:
-        target_layers = [model.layer4[-1].conv3]
+    if model_name in ['resnet50', 'resnet101', 'resnet152', 'resnext50']:
+        # target_layers = [model.layer4[-1].conv3]
+        target_layers = [model.layer4[-1].relu]
     elif model_name == 'resnet18':
-        target_layers = [model.layer4[-1].conv2]
+        # target_layers = [model.layer4[-1].conv2]
+        target_layers = [model.layer4[-1].relu]
     elif model_name == 'vgg16':
         target_layers = [model.features[-1]]
     elif model_name == 'vit':
         target_layers = [model.blocks[-1].norm1]
-    elif model_name in ['swint_t', 'swint_s', 'swint_b']:
-        target_layers = [model.layers[-1].blocks[-1].norm1]
+    elif model_name in ['swint_t', 'swint_s', 'swint_b', 'swint_l']:
+        # target_layers = [model.layers[-1].blocks[-1].norm1]
+        # target_layers = [model.layers[-1].blocks[-1].norm2]
+        target_layers = [model.norm]
     elif model_name == 'mobilenetv2':
-        target_layers = [model.features[-1][0]]
+        # target_layers = [model.features[-1][0]]
+        target_layers = [model.features[-1][2]]
     elif model_name == "efficientnetb0":
-        target_layers = [model.features[8][0]]
+        # target_layers = [model.features[-1][0]]
+        target_layers = [model.features[-1][2]]
 
     else:
         raise ValueError(f"Model {model_name} not supported")
-
     
     reshape_transform = None
     if model_name == 'vit':
         reshape_transform = vit_reshape_transform
-    elif model_name == 'swint':
+    elif model_name in ['swint_t', 'swint_s', 'swint_b', 'swint_l']:
         reshape_transform = swint_reshape_transform
     return methods[method_name](model=model, target_layers=target_layers, reshape_transform = reshape_transform)
+
 
 if __name__ == "__main__":
     args = get_args()
@@ -139,7 +152,7 @@ if __name__ == "__main__":
 
 
 
-    # Calculate the size of the subset (1/1000th of the total dataset)
+    # Calculate the size of the subset (1/100th of the total dataset)
     subset_size = len(val_dataset) // 1000
     # Split the dataset into the subset and the remainder (which we discard)
     subset_dataset, _ = random_split(val_dataset, [subset_size, len(val_dataset) - subset_size])
@@ -162,13 +175,16 @@ if __name__ == "__main__":
         input_tensor = imgs
         # target_categories = labels
 
-                # Get model predictions
         with torch.no_grad():  # Disables gradient calculation to save memory
             outputs = model(imgs)
-            target_categories = np.argmax(outputs.cpu().data.numpy(), axis=-1)
+            predicted_categories = torch.argmax(outputs, dim=-1)  # Use torch.argmax for tensors
+        input_tensor = imgs
+        target_categories = predicted_categories
 
 
-        targets = [ClassifierOutputTarget(category) for category in target_categories]
+
+        # targets = [ClassifierOutputTarget(category) for category in target_categories]
+        targets = [ClassifierOutputLnSoftmaxTarget(category) for category in target_categories]
         # targets = [ClassifierOutputSoftmaxTarget(category) for category in target_categories]
 
         # Compute CAMs
@@ -188,7 +204,7 @@ if __name__ == "__main__":
 
     # Prepare the output string
     output_str = (f"Model: {args.model}, CAM Method: {args.cam_method}, Batch Size: {args.batch_size}\n"
-                  f"Average ROAD: {average_road}\n")
+                  f"Average ROAD: {average_road}\n\n")
 
     # Print the results to the console
     print(output_str)

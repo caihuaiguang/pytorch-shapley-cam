@@ -40,7 +40,7 @@ class ShapleyCAM(BaseCAM):
             self.model.zero_grad()
             # loss = sum([(target(output) - torch.sum(output, dim=-1)) for target, output in zip(targets, outputs)])
             loss = sum([target(output) for target, output in zip(targets, outputs)])
-            self.score = [target(output).cpu().detach().numpy() for target, output in zip(targets, outputs)]
+            # self.score = [target(output).cpu().detach().numpy() for target, output in zip(targets, outputs)]
             # loss.backward(retain_graph=True, create_graph = True)
             torch.autograd.grad(loss, input_tensor,  retain_graph = True, create_graph = True)
 
@@ -66,38 +66,36 @@ class ShapleyCAM(BaseCAM):
         activations: List[Tensor]  # type: ignore[assignment]
         grads: List[Tensor]  # type: ignore[assignment]
 
+
         hvp = torch.autograd.grad(
             outputs=grads,
             inputs=activations,
             grad_outputs=activations,
-            retain_graph=False
+            retain_graph=False,
+            allow_unused=True
         )[0]
-        if self.activations_and_grads.reshape_transform is not None:
+        if hvp is None:
+            hvp = torch.tensor(0).to(self.device)
+        elif self.activations_and_grads.reshape_transform is not None:
             hvp = self.activations_and_grads.reshape_transform(hvp)
+
+        if self.activations_and_grads.reshape_transform is not None:
             activations = self.activations_and_grads.reshape_transform(activations)
             grads = self.activations_and_grads.reshape_transform(grads)
-        # weight = (grads - 0.5*hvp).cpu().detach().numpy()
-        weight = (grads  - 0.5*hvp).cpu().detach().numpy()
-        
+        weight = (grads - 0.5*hvp).cpu().detach().numpy()
+        # weight = ( -0.5*hvp).cpu().detach().numpy()
+        # print(hvp)
         # weight = (torch.mean(grads, dim=(2, 3), keepdim=True) - 0.5*hvp).cpu().detach().numpy()
         activations = activations.cpu().detach().numpy()
         grads = grads.cpu().detach().numpy()
 
-        # is_flatten = False
-        # weight = (weight>0)*weight
-        is_flatten = True
-        # 计算Softmax函数
-        def softmax(x):
-            # 减去最大值以提高数值稳定性
-            e_x = np.exp(x - np.max(x, axis=-1, keepdims=True))
-            return e_x / np.sum(e_x, axis=-1, keepdims=True)
+        is_flatten = False
+        # is_flatten = True
 
         # 2D image
         if len(activations.shape) == 4:
             if is_flatten is True:
                 weight = np.mean(weight, axis=(2, 3))
-                # scores = np.sum(weight*activations, axis=(2, 3))
-                # weight = softmax(scores)
             return weight, activations, is_flatten
         
         # 3D image
@@ -140,7 +138,7 @@ class ShapleyCAM(BaseCAM):
         else:
             raise ValueError(f"Invalid activation shape. Get {len(activations.shape)}.")
         
-        # weighted_activations = np.maximum(weighted_activations, 0)
+        weighted_activations = np.maximum(weighted_activations, 0)
         # weighted_activations = np.abs(weighted_activations)
         if eigen_smooth:
             cam = get_2d_projection(weighted_activations)

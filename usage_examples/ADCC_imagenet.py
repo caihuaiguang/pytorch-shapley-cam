@@ -23,16 +23,16 @@ def vit_reshape_transform(tensor, height=14, width=14):
 
 def swint_reshape_transform(tensor, height=7, width=7):
     ## norm 2
-    # result = tensor.reshape(tensor.size(0),
-    #                         height, width, tensor.size(2))
+    result = tensor.reshape(tensor.size(0),
+                            height, width, tensor.size(2))
 
-    # # Bring the channels to the first dimension,
-    # # like in CNNs.
-    # result = result.transpose(2, 3).transpose(1, 2)
+    # Bring the channels to the first dimension,
+    # like in CNNs.
+    result = result.transpose(2, 3).transpose(1, 2)
 
     ## norm1
     
-    result = tensor.transpose(2, 3).transpose(1, 2)
+    # result = tensor.transpose(2, 3).transpose(1, 2)
     return result
 
 
@@ -89,19 +89,25 @@ def select_cam_method(method_name, model, model_name):
         raise ValueError(f"CAM method {method_name} not supported")
     target_layers = None
     if model_name in ['resnet50', 'resnet101', 'resnext50']:
-        target_layers = [model.layer4[-1].conv3]
+        # target_layers = [model.layer4[-1].conv3]
+        target_layers = [model.layer4[-1].relu]
     elif model_name == 'resnet18':
-        target_layers = [model.layer4[-1].conv2]
+        # target_layers = [model.layer4[-1].conv2]
+        target_layers = [model.layer4[-1].relu]
     elif model_name == 'vgg16':
+        # target_layers = [model.features[28]]
         target_layers = [model.features[-1]]
     elif model_name == 'vit':
         target_layers = [model.blocks[-1].norm1]
     elif model_name in ['swint_t', 'swint_s', 'swint_b']:
-        target_layers = [model.layers[-1].blocks[-1].norm1]
+        # target_layers = [model.layers[-1].blocks[-1].norm1]
+        target_layers = [model.layers[-1].blocks[-1].norm2]
     elif model_name == 'mobilenetv2':
-        target_layers = [model.features[-1][0]]
+        # target_layers = [model.features[-1][0]]
+        target_layers = [model.features[-1][2]]
     elif model_name == "efficientnetb0":
-        target_layers = [model.features[8][0]]
+        # target_layers = [model.features[-1][0]]
+        target_layers = [model.features[-1][2]]
 
     else:
         raise ValueError(f"Model {model_name} not supported")
@@ -113,14 +119,15 @@ def select_cam_method(method_name, model, model_name):
         reshape_transform = swint_reshape_transform
     return methods[method_name](model=model, target_layers=target_layers, reshape_transform = reshape_transform)
 
+
 if __name__ == "__main__":
     args = get_args()
 
     # Load the model
     model = load_model(args.model)
-    model = model.to('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = model.to(device)
     model.eval()
-
 
     # Select the CAM method
     cam = select_cam_method(args.cam_method, model, args.model)
@@ -137,46 +144,40 @@ if __name__ == "__main__":
     val_dataset = datasets.ImageFolder('/media/caihuaiguang/data/ILSVRC2012_img_val', transform=transform)
     val_loader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
 
-
-
-    # Calculate the size of the subset (1/10th of the total dataset)
-    subset_size = len(val_dataset) // 100
-    # Split the dataset into the subset and the remainder (which we discard)
-    subset_dataset, _ = random_split(val_dataset, [subset_size, len(val_dataset) - subset_size])
-
-    # Create a DataLoader for the subset
-    val_loader = DataLoader(subset_dataset, batch_size=args.batch_size, shuffle=False)
-
+    # # Calculate the size of the subset (1/100th of the total dataset)
+    # subset_size = len(val_dataset) // 100
+    # subset_dataset, _ = random_split(val_dataset, [subset_size, len(val_dataset) - subset_size])
+    # val_loader = DataLoader(subset_dataset, batch_size=args.batch_size, shuffle=False)
 
     # Define the ADCC
     adcc_metric = ADCC()
 
-    # Initialize ADCC sum and counter
-    adcc_sum = 0.0
-    avgdrop_sum = 0.0
-    coh_sum = 0.0
-    com_sum = 0.0
-    num_images = 0
+    # Initialize metrics sum and counter
+    adcc_sum, avgdrop_sum, coh_sum, com_sum, num_images = 0.0, 0.0, 0.0, 0.0, 0
 
     # Iterate over the validation dataset
     for imgs, labels in tqdm(val_loader, desc="Processing images", unit="batch"):
-        # Move the images to the appropriate device
-        imgs = imgs.to('cuda' if torch.cuda.is_available() else 'cpu')
+        # Move the images and labels to the appropriate device
+        imgs = imgs.to(device)
+        labels = labels.to(device)
 
-        # Create input tensor and target
+        # # Get model predictions
+        # with torch.no_grad():  # Disables gradient calculation to save memory
+        #     outputs = model(imgs)
+        #     predicted_categories = torch.argmax(outputs, dim=-1)  # Use torch.argmax for tensors
+
+        # # Find correctly predicted samples
+        # correct_indices = (predicted_categories == labels).nonzero(as_tuple=True)[0]
+
+        # # Indexing tensors using correct indices
+        # # Update imgs and target_categories with correctly predicted samples
+        # input_tensor = imgs[correct_indices]
+        # target_categories = labels[correct_indices]
+        
         input_tensor = imgs
-
-        # use inferenced result other than ground truth
-        # target_categories = labels
-
-        # Get model predictions
-        with torch.no_grad():  # Disables gradient calculation to save memory
-            outputs = model(imgs)
-            target_categories = np.argmax(outputs.cpu().data.numpy(), axis=-1)
-
+        target_categories = labels
 
         targets = [ClassifierOutputTarget(category) for category in target_categories]
-        # targets = [ClassifierOutputSoftmaxTarget(category) for category in target_categories]
 
         # Compute CAMs
         grayscale_cams = cam(input_tensor=input_tensor, targets=targets)
@@ -184,6 +185,7 @@ if __name__ == "__main__":
         
         # Calculate ADCC and other metrics for the current batch
         adcc_value, avgdrop_value, coh_value, com_value = adcc_metric(input_tensor, grayscale_cams, targets, metric_targets, model, cam)
+        
         # Accumulate the metrics
         batch_size = imgs.size(0)
         adcc_sum += adcc_value.sum()
@@ -193,10 +195,11 @@ if __name__ == "__main__":
         num_images += batch_size
 
     # Calculate the average of all metrics over the entire validation dataset
-    average_adcc = adcc_sum / num_images
     average_avgdrop = avgdrop_sum / num_images
     average_coh = coh_sum / num_images
     average_com = com_sum / num_images
+    # average_adcc = 3 / (1 / average_coh + 1 / (1 - average_com) + 1 / (1 - average_avgdrop))
+    average_adcc = adcc_sum / num_images
 
     # Prepare the output string
     output_str = (f"Model: {args.model}, CAM Method: {args.cam_method}, Batch Size: {args.batch_size}\n"

@@ -22,8 +22,11 @@ def coherency(A, explanation_map, attr_method, targets):
     y = np.zeros(A.shape[0])
 
     for i in range(Asq.shape[0]):
-        if np.std(Bsq[i]) == 0 or np.std(Asq[i]) == 0:
-            print("yes")
+        # Check for NaN and inf values and handle them
+        if np.any(np.isnan(Bsq[i])) or np.any(np.isnan(Asq[i])) or np.any(np.isinf(Bsq[i])) or np.any(np.isinf(Asq[i])):
+            print(f"Warning: Array contains NaN or inf values at index {i}")
+            y[i] = 0.0  # Or some other default value, as appropriate
+        elif np.std(Bsq[i]) == 0 or np.std(Asq[i]) == 0:
             y[i] = 0.0
         else:
             y[i], _ = STS.pearsonr(Asq[i], Bsq[i])
@@ -47,25 +50,34 @@ class ADCC:
             outputs = model(input_tensor)
             scores = np.float32([metric_target(output).cpu().numpy() for metric_target, output in zip(metric_targets, outputs)])
 
-        perturbated_tensors = []
+        added_tensors = []
+        deleted_tensors = []
         for i in range(cams.shape[0]):
             cam = cams[i]
             tensor = self.perturbation(input_tensor[i, ...].cpu(), torch.from_numpy(cam))
             tensor = tensor.to(input_tensor.device)
-            perturbated_tensors.append(tensor.unsqueeze(0))
-        perturbated_tensors = torch.cat(perturbated_tensors)
+            added_tensors.append(tensor.unsqueeze(0))
+            tensor_delete = self.perturbation(input_tensor[i, ...].cpu(), torch.from_numpy(1-cam))
+            tensor_delete = tensor_delete.to(input_tensor.device)
+            deleted_tensors.append(tensor_delete.unsqueeze(0))
+        added_tensors = torch.cat(added_tensors)
+        deleted_tensors = torch.cat(deleted_tensors)
 
         with torch.no_grad():
-            outputs_after_imputation = model(perturbated_tensors)
-            scores_after_imputation = np.float32([metric_target(output).cpu().numpy() for metric_target, output in zip(metric_targets, outputs_after_imputation)])
+            outputs_after_added = model(added_tensors)
+            scores_after_added = np.float32([metric_target(output).cpu().numpy() for metric_target, output in zip(metric_targets, outputs_after_added)])
+            outputs_after_deleted = model(deleted_tensors)
+            scores_after_deleted = np.float32([metric_target(output).cpu().numpy() for metric_target, output in zip(metric_targets, outputs_after_deleted)])
 
-        avgdrop = np.maximum(0., scores - scores_after_imputation) / scores
+        drop = np.maximum(0., scores - scores_after_added) / scores
+        inc = scores_after_added > scores
+        dropindeletion = np.maximum(0., scores - scores_after_deleted)/scores
         com = complexity(cams)
-        coh, _, _ = coherency(cams, perturbated_tensors, cam_method, targets)
+        coh, _, _ = coherency(cams, added_tensors, cam_method, targets)
 
-        adcc = 3 / (1 / coh + 1 / (1 - com) + 1 / (1 - avgdrop))
+        adcc = 3 / (1 / coh + 1 / (1 - com) + 1 / (1 - drop))
 
         if return_visualization:
-            return adcc, perturbated_tensors
+            return adcc, drop, coh, com, inc, dropindeletion, added_tensors, deleted_tensors
         else:
-            return adcc, avgdrop, coh, com
+            return adcc, drop, coh, com, inc, dropindeletion
