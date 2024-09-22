@@ -1,0 +1,664 @@
+Model: swint_t, CAM Method: shapleycam, Batch Size: 128
+Average ADCC: 0.7310381851074242
+Average Drop: 0.32590537899017336
+Average Coherency: 0.8860091747799737
+Average Complexity: 0.3295902356338501
+Average Increase: 0.10152
+Average Drop in Deletion: 0.3894104913711548
+
+Model: swint_t, CAM Method: gradcamelementwise, Batch Size: 128
+Average ADCC: 0.7295342916604562
+Average Drop: 0.3283292038345337
+Average Coherency: 0.8818402271974901
+Average Complexity: 0.32858670635223386
+Average Increase: 0.10118
+Average Drop in Deletion: 0.3898002727508545
+
+Model: resnext50, CAM Method: shapleycam, Batch Size: 128
+Average ADCC: 0.7890394619340029
+Average Drop: 0.28065729810714724
+Average Coherency: 0.9564754450457716
+Average Complexity: 0.26816492073059084
+Average Increase: 0.22378
+Average Drop in Deletion: 0.2878081453514099
+
+Model: resnext50, CAM Method: gradcamelementwise, Batch Size: 128
+Average ADCC: 0.7886488822620521
+Average Drop: 0.2810512788772583
+Average Coherency: 0.9564669993823421
+Average Complexity: 0.26875998268127443
+Average Increase: 0.22312
+Average Drop in Deletion: 0.28708579256057737
+
+Model: swint_t, CAM Method: shapleycam_mean, Batch Size: 128
+Average ADCC: 0.7537564510426609
+Average Drop: 0.3213074542617798
+Average Coherency: 0.9169041541990413
+Average Complexity: 0.2937941296005249
+Average Increase: 0.12104
+Average Drop in Deletion: 0.38493818073272706
+
+Model: swint_t, CAM Method: gradcam, Batch Size: 128
+Average ADCC: 0.752738075092251
+Average Drop: 0.3276498971176147
+Average Coherency: 0.9013080513877624
+Average Complexity: 0.27986634284973144
+Average Increase: 0.12626
+Average Drop in Deletion: 0.3754694815826416
+
+Model: resnext50, CAM Method: shapleycam_mean, Batch Size: 128
+Average ADCC: 0.7486341539506115
+Average Drop: 0.3757192204475403
+Average Coherency: 0.8442544418231228
+Average Complexity: 0.18098404806137086
+Average Increase: 0.1999
+Average Drop in Deletion: 0.283858579082489
+
+Model: swint_t, CAM Method: gradcamplusplus, Batch Size: 128
+Average ADCC: 0.7460548371268231
+Average Drop: 0.33624887523651126
+Average Coherency: 0.889127774721051
+Average Complexity: 0.2805059753799439
+Average Increase: 0.12118
+Average Drop in Deletion: 0.3722009504318237
+
+Model: resnext50, CAM Method: gradcam, Batch Size: 128
+Average ADCC: 0.737530878097132
+Average Drop: 0.3863803470611572
+Average Coherency: 0.8193472827904051
+Average Complexity: 0.17862357944488524
+Average Increase: 0.19316
+Average Drop in Deletion: 0.2805571536827087
+
+Model: swint_t, CAM Method: layercam, Batch Size: 128
+Average ADCC: 0.7463542319002667
+Average Drop: 0.3317791775894165
+Average Coherency: 0.891969364604937
+Average Complexity: 0.28668900299072264
+Average Increase: 0.12044
+Average Drop in Deletion: 0.38027388526916506
+
+Model: resnext50, CAM Method: gradcamplusplus, Batch Size: 128
+Average ADCC: 0.790259717477614
+Average Drop: 0.278249973487854
+Average Coherency: 0.9539422332982624
+Average Complexity: 0.26601063835144045
+Average Increase: 0.23862
+Average Drop in Deletion: 0.30585171951293944
+
+Model: resnext50, CAM Method: layercam, Batch Size: 128
+Average ADCC: 0.7886488822620521
+Average Drop: 0.2810512788772583
+Average Coherency: 0.9564669993823421
+Average Complexity: 0.26875998268127443
+Average Increase: 0.22312
+Average Drop in Deletion: 0.28708579256057737
+
+Model: swint_t, CAM Method: randomcam, Batch Size: 128
+Average ADCC: 0.4550152921867736
+Average Drop: 0.7313060916137696
+Average Coherency: 0.599932123716124
+Average Complexity: 0.16986460235595705
+Average Increase: 0.02784
+Average Drop in Deletion: 0.1524637476348877
+
+Model: resnext50, CAM Method: randomcam, Batch Size: 128
+Average ADCC: 0.48486789315530954
+Average Drop: 0.6995918793487549
+Average Coherency: 0.5988182005197507
+Average Complexity: 0.15859732387542724
+Average Increase: 0.06226
+Average Drop in Deletion: 0.1342695554637909
+
+Model: swint_s, CAM Method: shapleycam, Batch Size: 64
+Average ADCC: 0.7580202236531871
+Average Drop: 0.2713296425437927
+Average Coherency: 0.8947387813022738
+Average Complexity: 0.3186482680130005
+Average Increase: 0.23442
+Average Drop in Deletion: 0.35017238324165345
+
+Model: resnet50, CAM Method: shapleycam, Batch Size: 128
+Average ADCC: 0.7864407924911804
+Average Drop: 0.3117713331222534
+Average Coherency: 0.9517664826936292
+Average Complexity: 0.23720678436279297
+Average Increase: 0.21436
+Average Drop in Deletion: 0.27646516468048093
+
+Model: swint_s, CAM Method: gradcamelementwise, Batch Size: 64
+Average ADCC: 0.7563752707297309
+Average Drop: 0.2721548459339142
+Average Coherency: 0.8906153624230325
+Average Complexity: 0.31951836302757264
+Average Increase: 0.2351
+Average Drop in Deletion: 0.35265979727745056
+
+Model: resnet50, CAM Method: gradcamelementwise, Batch Size: 128
+Average ADCC: 0.7858485023299184
+Average Drop: 0.31199557968139646
+Average Coherency: 0.9511965810844155
+Average Complexity: 0.2382364324951172
+Average Increase: 0.21466
+Average Drop in Deletion: 0.27542851318359374
+
+Model: swint_s, CAM Method: shapleycam_mean, Batch Size: 64
+Average ADCC: 0.7769846435028105
+Average Drop: 0.2624970574760437
+Average Coherency: 0.8880391429561272
+Average Complexity: 0.2748772687625885
+Average Increase: 0.27666
+Average Drop in Deletion: 0.32236565726280214
+
+Model: resnet50, CAM Method: shapleycam_mean, Batch Size: 128
+Average ADCC: 0.707274002090634
+Average Drop: 0.4646016945648193
+Average Coherency: 0.8324073292836209
+Average Complexity: 0.14714651161193848
+Average Increase: 0.14034
+Average Drop in Deletion: 0.2724595981407166
+
+Model: swint_s, CAM Method: gradcam, Batch Size: 64
+Average ADCC: 0.7738566097277294
+Average Drop: 0.2688885838365555
+Average Coherency: 0.8682336159727485
+Average Complexity: 0.26315789323806765
+Average Increase: 0.28136
+Average Drop in Deletion: 0.3158251322174072
+
+Model: resnet50, CAM Method: gradcam, Batch Size: 128
+Average ADCC: 0.6935532921089498
+Average Drop: 0.4754093418502808
+Average Coherency: 0.8014813759667225
+Average Complexity: 0.1464758204650879
+Average Increase: 0.13548
+Average Drop in Deletion: 0.2695380084228516
+
+Model: resnet50, CAM Method: gradcamplusplus, Batch Size: 128
+Average ADCC: 0.7602179055355238
+Average Drop: 0.3383686581039429
+Average Coherency: 0.8810535472654115
+Average Complexity: 0.23066061611175537
+Average Increase: 0.20438
+Average Drop in Deletion: 0.24439542932510375
+
+Model: swint_s, CAM Method: gradcamplusplus, Batch Size: 64
+Average ADCC: 0.7754610855574019
+Average Drop: 0.2833434954881668
+Average Coherency: 0.8720980047192315
+Average Complexity: 0.2462144943523407
+Average Increase: 0.2729
+Average Drop in Deletion: 0.2999120527267456
+
+Model: resnet50, CAM Method: layercam, Batch Size: 128
+Average ADCC: 0.7858485023299184
+Average Drop: 0.31199557968139646
+Average Coherency: 0.9511965810844155
+Average Complexity: 0.2382364324951172
+Average Increase: 0.21466
+Average Drop in Deletion: 0.27542851318359374
+
+Model: swint_s, CAM Method: layercam, Batch Size: 64
+Average ADCC: 0.7785909350160166
+Average Drop: 0.2804665030956268
+Average Coherency: 0.8789425017088075
+Average Complexity: 0.24562135605335236
+Average Increase: 0.27302
+Average Drop in Deletion: 0.3011978130722046
+
+Model: resnet50, CAM Method: randomcam, Batch Size: 128
+Average ADCC: 0.44981378976883934
+Average Drop: 0.7362762635803223
+Average Coherency: 0.5887348010563107
+Average Complexity: 0.1518394432067871
+Average Increase: 0.0486
+Average Drop in Deletion: 0.12787939813137053
+
+Model: swint_s, CAM Method: randomcam, Batch Size: 64
+Average ADCC: 0.48693859008118495
+Average Drop: 0.6879387923049927
+Average Coherency: 0.5727478261418607
+Average Complexity: 0.17387632786273957
+Average Increase: 0.0641
+Average Drop in Deletion: 0.15936143978118897
+
+Model: resnet101, CAM Method: shapleycam, Batch Size: 64
+Average ADCC: 0.8056842745196505
+Average Drop: 0.2540827766561508
+Average Coherency: 0.965484723769089
+Average Complexity: 0.2576990250205994
+Average Increase: 0.26408
+Average Drop in Deletion: 0.30103583279132845
+
+Model: resnet101, CAM Method: gradcamelementwise, Batch Size: 64
+Average ADCC: 0.8051552385527664
+Average Drop: 0.25444133862018586
+Average Coherency: 0.9651664190452298
+Average Complexity: 0.258502773399353
+Average Increase: 0.2636
+Average Drop in Deletion: 0.3000686891269684
+
+Model: swint_b, CAM Method: shapleycam, Batch Size: 48
+Average ADCC: 0.7365212506594165
+Average Drop: 0.28949556379318236
+Average Coherency: 0.8588506912612289
+Average Complexity: 0.3339570800209045
+Average Increase: 0.22122
+Average Drop in Deletion: 0.37509020795822146
+
+Model: resnet101, CAM Method: shapleycam_mean, Batch Size: 64
+Average ADCC: 0.755394794676724
+Average Drop: 0.3700732587194443
+Average Coherency: 0.8470798979704257
+Average Complexity: 0.1690355202817917
+Average Increase: 0.21186
+Average Drop in Deletion: 0.2910698304271698
+
+Model: resnet101, CAM Method: gradcam, Batch Size: 64
+Average ADCC: 0.7445177458734883
+Average Drop: 0.38084504425525667
+Average Coherency: 0.8242514992912033
+Average Complexity: 0.16744890323638917
+Average Increase: 0.20644
+Average Drop in Deletion: 0.28799594030857084
+
+Model: swint_b, CAM Method: gradcamelementwise, Batch Size: 48
+Average ADCC: 0.7349939652276714
+Average Drop: 0.29069511741161347
+Average Coherency: 0.8550514207140276
+Average Complexity: 0.33436058170318605
+Average Increase: 0.22068
+Average Drop in Deletion: 0.3762770565795898
+
+Model: resnet101, CAM Method: gradcamplusplus, Batch Size: 64
+Average ADCC: 0.8034482037601967
+Average Drop: 0.24338572407245637
+Average Coherency: 0.9609305338212379
+Average Complexity: 0.2709088129138947
+Average Increase: 0.2807
+Average Drop in Deletion: 0.3022574301624298
+
+Model: swint_b, CAM Method: shapleycam_mean, Batch Size: 48
+Average ADCC: 0.7629049046349344
+Average Drop: 0.27565865176081655
+Average Coherency: 0.8677895293786
+Average Complexity: 0.2854184232711792
+Average Increase: 0.26578
+Average Drop in Deletion: 0.34001087733268737
+
+Model: resnet101, CAM Method: layercam, Batch Size: 64
+Average ADCC: 0.8051552385527664
+Average Drop: 0.25444133862018586
+Average Coherency: 0.9651664190452298
+Average Complexity: 0.258502773399353
+Average Increase: 0.2636
+Average Drop in Deletion: 0.3000686891269684
+
+Model: resnet101, CAM Method: randomcam, Batch Size: 64
+Average ADCC: 0.4998871454089542
+Average Drop: 0.6902955151176453
+Average Coherency: 0.6304964448795931
+Average Complexity: 0.15712698033332825
+Average Increase: 0.06686
+Average Drop in Deletion: 0.13870848970413208
+
+Model: swint_b, CAM Method: gradcam, Batch Size: 48
+Average ADCC: 0.7609996176055773
+Average Drop: 0.2811332278227806
+Average Coherency: 0.8532773887925336
+Average Complexity: 0.27491736120224
+Average Increase: 0.2681
+Average Drop in Deletion: 0.3324828941345215
+
+Model: swint_b, CAM Method: gradcamplusplus, Batch Size: 48
+Average ADCC: 0.7565699167418612
+Average Drop: 0.28729523406505586
+Average Coherency: 0.8427334947609233
+Average Complexity: 0.27301512342453005
+Average Increase: 0.26938
+Average Drop in Deletion: 0.3282931291294098
+
+Model: resnet152, CAM Method: gradcamelementwise, Batch Size: 64
+Average ADCC: 0.8097370842722152
+Average Drop: 0.24644937820911408
+Average Coherency: 0.9657940029769291
+Average Complexity: 0.25508659799575806
+Average Increase: 0.26602
+Average Drop in Deletion: 0.2810430189549923
+
+Model: swint_b, CAM Method: layercam, Batch Size: 48
+Average ADCC: 0.7580359979189315
+Average Drop: 0.282291152985096
+Average Coherency: 0.845498753022084
+Average Complexity: 0.2761696396636963
+Average Increase: 0.27228
+Average Drop in Deletion: 0.33242676103591917
+
+Model: resnet152, CAM Method: gradcam, Batch Size: 64
+Average ADCC: 0.7507044200289338
+Average Drop: 0.370488864941597
+Average Coherency: 0.8305603900091899
+Average Complexity: 0.16923235189437866
+Average Increase: 0.21292
+Average Drop in Deletion: 0.2700719668006897
+
+Model: swint_b, CAM Method: randomcam, Batch Size: 48
+Average ADCC: 0.47137591577967347
+Average Drop: 0.7051605698776245
+Average Coherency: 0.5662335535965297
+Average Complexity: 0.17123516293525695
+Average Increase: 0.06064
+Average Drop in Deletion: 0.16124070703029633
+
+Model: resnet152, CAM Method: gradcamplusplus, Batch Size: 64
+Average ADCC: 0.8061350425174784
+Average Drop: 0.2376139915752411
+Average Coherency: 0.9600882239738795
+Average Complexity: 0.2691225329780579
+Average Increase: 0.28424
+Average Drop in Deletion: 0.2812481992506981
+
+Model: resnet152, CAM Method: layercam, Batch Size: 64
+Average ADCC: 0.8097370842722152
+Average Drop: 0.24644937820911408
+Average Coherency: 0.9657940029769291
+Average Complexity: 0.25508659799575806
+Average Increase: 0.26602
+Average Drop in Deletion: 0.2810430189549923
+
+Model: swint_l, CAM Method: shapleycam, Batch Size: 32
+Average ADCC: 0.7271455682885559
+Average Drop: 0.3557616234230995
+Average Coherency: 0.880031744579057
+Average Complexity: 0.3041920783424377
+Average Increase: 0.1055
+Average Drop in Deletion: 0.3210892313814163
+
+Model: resnet152, CAM Method: randomcam, Batch Size: 64
+Average ADCC: 0.5083621674887198
+Average Drop: 0.6817603082084656
+Average Coherency: 0.6350007081735322
+Average Complexity: 0.15556060991764067
+Average Increase: 0.06952
+Average Drop in Deletion: 0.12900718058466912
+
+Model: resnet18, CAM Method: shapleycam, Batch Size: 128
+Average ADCC: 0.7638177225735415
+Average Drop: 0.3254948783493042
+Average Coherency: 0.9622751849979269
+Average Complexity: 0.2886948764419556
+Average Increase: 0.21414
+Average Drop in Deletion: 0.3888848727798462
+
+Model: resnet18, CAM Method: gradcamelementwise, Batch Size: 128
+Average ADCC: 0.7627964032120279
+Average Drop: 0.3262994700431824
+Average Coherency: 0.9610418366638769
+Average Complexity: 0.2897832905960083
+Average Increase: 0.21266
+Average Drop in Deletion: 0.3870510563659668
+
+Model: resnet18, CAM Method: shapleycam_mean, Batch Size: 128
+Average ADCC: 0.7323557519614331
+Average Drop: 0.40633361854553224
+Average Coherency: 0.8803578285451218
+Average Complexity: 0.21631341976165772
+Average Increase: 0.17614
+Average Drop in Deletion: 0.39773442710876467
+
+Model: resnet18, CAM Method: gradcam, Batch Size: 128
+Average ADCC: 0.7109562332446894
+Average Drop: 0.43389202953338624
+Average Coherency: 0.8420332748458608
+Average Complexity: 0.20987343669891356
+Average Increase: 0.15922
+Average Drop in Deletion: 0.38735259300231933
+
+Model: swint_l, CAM Method: gradcamelementwise, Batch Size: 32
+Average ADCC: 0.7259506123132051
+Average Drop: 0.3563203508377075
+Average Coherency: 0.8770414484679437
+Average Complexity: 0.3049511157989502
+Average Increase: 0.10636
+Average Drop in Deletion: 0.32233768217086795
+
+Model: resnet18, CAM Method: gradcamplusplus, Batch Size: 128
+Average ADCC: 0.7572590424429062
+Average Drop: 0.31987903640747073
+Average Coherency: 0.9526885234707982
+Average Complexity: 0.3063592785263062
+Average Increase: 0.2194
+Average Drop in Deletion: 0.38174333446502684
+
+Model: resnet18, CAM Method: layercam, Batch Size: 128
+Average ADCC: 0.7627964032120279
+Average Drop: 0.3262994700431824
+Average Coherency: 0.9610418366638769
+Average Complexity: 0.2897832905960083
+Average Increase: 0.21266
+Average Drop in Deletion: 0.3870510563659668
+
+Model: resnet18, CAM Method: randomcam, Batch Size: 128
+Average ADCC: 0.3924673095852903
+Average Drop: 0.7889009455871582
+Average Coherency: 0.5864234482113779
+Average Complexity: 0.16776500247955323
+Average Increase: 0.03388
+Average Drop in Deletion: 0.17903903553962708
+
+Model: vgg16, CAM Method: shapleycam, Batch Size: 64
+Average ADCC: 0.8019539809837702
+Average Drop: 0.22153178078651428
+Average Coherency: 0.957510267976125
+Average Complexity: 0.29174149053573606
+Average Increase: 0.28792
+Average Drop in Deletion: 0.3859208887863159
+
+Model: swint_l, CAM Method: shapleycam_mean, Batch Size: 32
+Average ADCC: 0.7503099733191286
+Average Drop: 0.338841467320919
+Average Coherency: 0.8726478333400535
+Average Complexity: 0.2536830554389954
+Average Increase: 0.14622
+Average Drop in Deletion: 0.2840269827413559
+
+Model: vgg16, CAM Method: gradcamelementwise, Batch Size: 64
+Average ADCC: 0.8011193270895499
+Average Drop: 0.2234862382388115
+Average Coherency: 0.9558190724909436
+Average Complexity: 0.29114723459243774
+Average Increase: 0.28606
+Average Drop in Deletion: 0.3845497117853165
+
+Model: vgg16, CAM Method: shapleycam_mean, Batch Size: 64
+Average ADCC: 0.7468554762275199
+Average Drop: 0.34201281725406646
+Average Coherency: 0.8343158396079557
+Average Complexity: 0.229861714220047
+Average Increase: 0.2266
+Average Drop in Deletion: 0.36802305557250975
+
+Model: vgg16, CAM Method: gradcam, Batch Size: 64
+Average ADCC: 0.732993093737016
+Average Drop: 0.36898999513626096
+Average Coherency: 0.8180254344567387
+Average Complexity: 0.2221477552318573
+Average Increase: 0.20748
+Average Drop in Deletion: 0.3593667285299301
+
+Model: swint_l, CAM Method: gradcam, Batch Size: 32
+Average ADCC: 0.7479893099671722
+Average Drop: 0.34283557245254515
+Average Coherency: 0.8575768498511189
+Average Complexity: 0.24413471504211426
+Average Increase: 0.15068
+Average Drop in Deletion: 0.2768530816650391
+
+Model: vgg16, CAM Method: gradcamplusplus, Batch Size: 64
+Average ADCC: 0.7918456201927504
+Average Drop: 0.2539266242313385
+Average Coherency: 0.9427120686410495
+Average Complexity: 0.2792778583526611
+Average Increase: 0.27428
+Average Drop in Deletion: 0.38752792057991026
+
+Model: vgg16, CAM Method: layercam, Batch Size: 64
+Average ADCC: 0.8011193270895499
+Average Drop: 0.2234862382388115
+Average Coherency: 0.9558190724909436
+Average Complexity: 0.29114723459243774
+Average Increase: 0.28606
+Average Drop in Deletion: 0.3845497117853165
+
+Model: vgg16, CAM Method: randomcam, Batch Size: 64
+Average ADCC: 0.46561593678603663
+Average Drop: 0.7223421910095215
+Average Coherency: 0.6099450590353686
+Average Complexity: 0.16807472672462465
+Average Increase: 0.0481
+Average Drop in Deletion: 0.15202185455560685
+
+Model: swint_l, CAM Method: gradcamplusplus, Batch Size: 32
+Average ADCC: 0.7512666851506082
+Average Drop: 0.3432408452796936
+Average Coherency: 0.8621017006204653
+Average Complexity: 0.2370323719406128
+Average Increase: 0.14762
+Average Drop in Deletion: 0.26797677596092223
+
+Model: efficientnetb0, CAM Method: shapleycam, Batch Size: 128
+Average ADCC: 0.7956402964071224
+Average Drop: 0.2933223538970947
+Average Coherency: 0.9743921142232201
+Average Complexity: 0.24766485668182373
+Average Increase: 0.28096
+Average Drop in Deletion: 0.34192917484283447
+
+Model: efficientnetb0, CAM Method: gradcamelementwise, Batch Size: 128
+Average ADCC: 0.795209262217503
+Average Drop: 0.29514644231796267
+Average Coherency: 0.9729249270184838
+Average Complexity: 0.24586863758087157
+Average Increase: 0.28012
+Average Drop in Deletion: 0.3405648035812378
+
+Model: efficientnetb0, CAM Method: shapleycam_mean, Batch Size: 128
+Average ADCC: 0.8072176529719767
+Average Drop: 0.2515254335594177
+Average Coherency: 0.9610517388485016
+Average Complexity: 0.253671367225647
+Average Increase: 0.32954
+Average Drop in Deletion: 0.3803162633514404
+
+Model: efficientnetb0, CAM Method: gradcam, Batch Size: 128
+Average ADCC: 0.7999912856006969
+Average Drop: 0.26324883188247683
+Average Coherency: 0.9328135675647714
+Average Complexity: 0.24282858699798585
+Average Increase: 0.32476
+Average Drop in Deletion: 0.37860720626831057
+
+Model: swint_l, CAM Method: layercam, Batch Size: 32
+Average ADCC: 0.7544011041175265
+Average Drop: 0.33729466615438464
+Average Coherency: 0.8674630286261291
+Average Complexity: 0.23949238354206084
+Average Increase: 0.14688
+Average Drop in Deletion: 0.2711136164045334
+
+Model: efficientnetb0, CAM Method: gradcamplusplus, Batch Size: 128
+Average ADCC: 0.7942172370146784
+Average Drop: 0.31750942544937133
+Average Coherency: 0.9706174475167577
+Average Complexity: 0.21985338680267333
+Average Increase: 0.26512
+Average Drop in Deletion: 0.34487335544586184
+
+Model: efficientnetb0, CAM Method: layercam, Batch Size: 128
+Average ADCC: 0.7930746431495186
+Average Drop: 0.32047485803604125
+Average Coherency: 0.9717197899053842
+Average Complexity: 0.21998518501281739
+Average Increase: 0.25984
+Average Drop in Deletion: 0.3414703113174439
+
+Model: efficientnetb0, CAM Method: randomcam, Batch Size: 128
+Average ADCC: 0.4928364446365306
+Average Drop: 0.6941033926391602
+Average Coherency: 0.6181987112545134
+Average Complexity: 0.16703517112731933
+Average Increase: 0.08424
+Average Drop in Deletion: 0.1594542031478882
+
+Model: mobilenetv2, CAM Method: shapleycam, Batch Size: 128
+Average ADCC: 0.7453932414250471
+Average Drop: 0.19064162199020385
+Average Coherency: 0.9841795884940743
+Average Complexity: 0.43601598388671875
+Average Increase: 0.30658
+Average Drop in Deletion: 0.5049495864105225
+
+Model: swint_l, CAM Method: randomcam, Batch Size: 32
+Average ADCC: 0.46906300558008396
+Average Drop: 0.7104641773033142
+Average Coherency: 0.5731984827953376
+Average Complexity: 0.16480755524635315
+Average Increase: 0.03568
+Average Drop in Deletion: 0.1397684660243988
+
+Model: mobilenetv2, CAM Method: gradcamelementwise, Batch Size: 128
+Average ADCC: 0.7448424163470075
+Average Drop: 0.19110228437423707
+Average Coherency: 0.9836487934803072
+Average Complexity: 0.436563953704834
+Average Increase: 0.30582
+Average Drop in Deletion: 0.5031946636962891
+
+Model: mobilenetv2, CAM Method: shapleycam_mean, Batch Size: 128
+Average ADCC: 0.7733122665866644
+Average Drop: 0.2463359355545044
+Average Coherency: 0.9214437129983929
+Average Complexity: 0.3184814225769043
+Average Increase: 0.28152
+Average Drop in Deletion: 0.45290969337463377
+
+Model: mobilenetv2, CAM Method: gradcam, Batch Size: 128
+Average ADCC: 0.7587716845699762
+Average Drop: 0.2796316215705872
+Average Coherency: 0.886794627704228
+Average Complexity: 0.3045524926757813
+Average Increase: 0.25606
+Average Drop in Deletion: 0.4379785609436035
+
+Model: mobilenetv2, CAM Method: gradcamplusplus, Batch Size: 128
+Average ADCC: 0.7535189337629346
+Average Drop: 0.20415436069488527
+Average Coherency: 0.9783764248335318
+Average Complexity: 0.4126952166748047
+Average Increase: 0.3028
+Average Drop in Deletion: 0.48597715454101564
+
+Model: mobilenetv2, CAM Method: layercam, Batch Size: 128
+Average ADCC: 0.7448424163470075
+Average Drop: 0.19110228437423707
+Average Coherency: 0.9836487934803072
+Average Complexity: 0.436563953704834
+Average Increase: 0.30582
+Average Drop in Deletion: 0.5031946636962891
+
+Model: mobilenetv2, CAM Method: randomcam, Batch Size: 128
+Average ADCC: 0.45753584154972016
+Average Drop: 0.7185841391754151
+Average Coherency: 0.5667083809933501
+Average Complexity: 0.19278504919052125
+Average Increase: 0.05982
+Average Drop in Deletion: 0.17768547574996948
+
+Model: swint_t, CAM Method: shapleycam_x, Batch Size: 128
+Average ADCC: 0.7537564363669327
+Average Drop: 0.3213075200271606
+Average Coherency: 0.9169041773160557
+Average Complexity: 0.29379411075592043
+Average Increase: 0.12104
+Average Drop in Deletion: 0.38493813720703124
+

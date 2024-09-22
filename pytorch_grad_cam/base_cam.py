@@ -76,7 +76,7 @@ class BaseCAM:
         if eigen_smooth:
             cam = get_2d_projection(weighted_activations)
         else:
-            cam = weighted_activations.sum(axis=1)
+            cam = np.nansum(weighted_activations, axis=1)
         return cam
 
     def forward(
@@ -91,11 +91,6 @@ class BaseCAM:
 
         if targets is None:
             target_categories = np.argmax(outputs.cpu().data.numpy(), axis=-1)
-            print(target_categories)
-            print(outputs.cpu().data.numpy().shape)
-            # print(np.sort(outputs.cpu().data.numpy()[0]))
-            top_k_idx=outputs[0].cpu().data.numpy().argsort()[::-1][0:5]
-            print(top_k_idx)
             targets = [ClassifierOutputTarget(category) for category in target_categories]
 
         if self.uses_gradients:

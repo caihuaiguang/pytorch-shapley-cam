@@ -1,0 +1,99 @@
+Model: swint_t, CAM Method: shapleycam_mean, Batch Size: 32
+Average ROAD: 0.2628640604019165
+
+Model: swint_t, CAM Method: shapleycam_hires, Batch Size: 32
+Average ROAD: 0.2601271629333496
+
+Model: swint_t, CAM Method: shapleycam_x, Batch Size: 32
+Average ROAD: 0.2874927997589111
+
+Model: swint_t, CAM Method: shapleycam, Batch Size: 32
+Average ROAD: 0.23991084098815918
+
+Model: swint_t, CAM Method: gradcam, Batch Size: 32
+Average ROAD: 0.2558184242248535
+
+Model: swint_t, CAM Method: gradcamelementwise, Batch Size: 32
+Average ROAD: 0.23531725883483887
+
+Model: swint_t, CAM Method: hirescam, Batch Size: 32
+Average ROAD: 0.2744592189788818
+
+Model: swint_t, CAM Method: gradcamplusplus, Batch Size: 32
+Average ROAD: 0.2694067096710205
+
+Model: swint_t, CAM Method: xgradcam, Batch Size: 32
+Average ROAD: 0.25080018043518065
+
+Model: swint_t, CAM Method: layercam, Batch Size: 32
+Average ROAD: 0.28925275802612305
+
+Model: swint_t, CAM Method: randomcam, Batch Size: 32
+Average ROAD: 0.0519852352142334
+
+Model: swint_s, CAM Method: shapleycam_mean, Batch Size: 32
+Average ROAD: 0.24581323623657225
+
+Model: swint_s, CAM Method: shapleycam_hires, Batch Size: 32
+Average ROAD: 0.24650132179260253
+
+Model: swint_s, CAM Method: shapleycam_x, Batch Size: 32
+Average ROAD: 0.24234539031982422
+
+Model: swint_s, CAM Method: shapleycam, Batch Size: 32
+Average ROAD: 0.22548476219177246
+
+Model: swint_s, CAM Method: gradcam, Batch Size: 32
+Average ROAD: 0.2681845092773438
+
+Model: swint_s, CAM Method: gradcamelementwise, Batch Size: 32
+Average ROAD: 0.22923166751861573
+
+Model: swint_s, CAM Method: hirescam, Batch Size: 32
+Average ROAD: 0.2347007131576538
+
+Model: swint_s, CAM Method: gradcamplusplus, Batch Size: 32
+Average ROAD: 0.24721877098083497
+
+Model: swint_s, CAM Method: xgradcam, Batch Size: 32
+Average ROAD: 0.24454995155334472
+
+Model: swint_s, CAM Method: layercam, Batch Size: 32
+Average ROAD: 0.20869942665100097
+
+Model: swint_s, CAM Method: randomcam, Batch Size: 32
+Average ROAD: 0.011653048545122146
+
+Model: swint_b, CAM Method: shapleycam_mean, Batch Size: 32
+Average ROAD: 0.23892357349395751
+
+Model: swint_b, CAM Method: shapleycam_hires, Batch Size: 32
+Average ROAD: 0.2240089511871338
+
+Model: swint_b, CAM Method: shapleycam_x, Batch Size: 32
+Average ROAD: 0.2494999027252197
+
+Model: swint_b, CAM Method: shapleycam, Batch Size: 32
+Average ROAD: 0.21122271537780762
+
+Model: swint_b, CAM Method: gradcam, Batch Size: 32
+Average ROAD: 0.20206002235412598
+
+Model: swint_b, CAM Method: gradcamelementwise, Batch Size: 32
+Average ROAD: 0.21360188484191894
+
+Model: swint_b, CAM Method: hirescam, Batch Size: 32
+Average ROAD: 0.2326709270477295
+
+Model: swint_b, CAM Method: gradcamplusplus, Batch Size: 32
+Average ROAD: 0.2231300163269043
+
+Model: swint_b, CAM Method: xgradcam, Batch Size: 32
+Average ROAD: 0.2474418354034424
+
+Model: swint_b, CAM Method: layercam, Batch Size: 32
+Average ROAD: 0.23632809162139892
+
+Model: swint_b, CAM Method: randomcam, Batch Size: 32
+Average ROAD: 0.04545217514038086
+
