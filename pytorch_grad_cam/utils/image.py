@@ -21,6 +21,19 @@ def preprocess_image(
     ])
     return preprocessing(img.copy()).unsqueeze(0)
 
+def undo_preprocess_image(
+    tensor: torch.Tensor, use_rgb=False, mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+) -> np.ndarray:
+    mean = torch.tensor(mean).view(3, 1, 1)
+    std = torch.tensor(std).view(3, 1, 1)
+    tensor = tensor * std + mean
+    
+    img = tensor.numpy()
+    img = np.transpose(img, (1, 2, 0))  # from (3, H, W) to (H, W, 3)
+
+    img = np.clip(img, 0, 1)
+    img = np.uint8(img * 255)
+    return img
 
 def deprocess_image(img):
     """ see https://github.com/jacobgil/keras-grad-cam/blob/master/grad-cam.py#L65 """

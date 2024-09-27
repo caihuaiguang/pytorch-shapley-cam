@@ -46,7 +46,7 @@ class ScoreCAM(BaseCAM):
 
             scores = []
             for target, tensor in zip(targets, input_tensors):
-                for i in tqdm.tqdm(range(0, tensor.size(0), BATCH_SIZE)):
+                for i in range(0, tensor.size(0), BATCH_SIZE):
                     batch = tensor[i: i + BATCH_SIZE, :]
                     outputs = [target(o).cpu().item()
                                for o in self.model(batch)]
