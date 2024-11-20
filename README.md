@@ -3,7 +3,12 @@
 [![Downloads](https://static.pepy.tech/personalized-badge/grad-cam?period=month&units=international_system&left_color=black&right_color=brightgreen&left_text=Monthly%20Downloads)](https://pepy.tech/project/grad-cam)
 [![Downloads](https://static.pepy.tech/personalized-badge/grad-cam?period=total&units=international_system&left_color=black&right_color=blue&left_text=Total%20Downloads)](https://pepy.tech/project/grad-cam)
 
+This is the repository of the paper "Shapley Value-based Class Activation Mapping for Improved Explainability in Neural Networks".
+
 To reproduce the experimental results in ShaplyCAM, just run the script `usage_examples/run_img_gist.sh`
+
+The data is the ImageNet validation set, which is available at [https://www.image-net.org/](https://www.image-net.org/).
+
 
 # Advanced AI explainability for PyTorch
 
