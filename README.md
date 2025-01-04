@@ -9,6 +9,10 @@ To reproduce the experimental results in ShaplyCAM, just run the script `usage_e
 
 The data is the ImageNet validation set, which is available at [https://www.image-net.org/](https://www.image-net.org/).
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a73d2bef500d2d44fd868a6b307d7cd279c8849e
 # Advanced AI explainability for PyTorch
 
 `pip install grad-cam`
