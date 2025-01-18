@@ -3,7 +3,7 @@
 [![Downloads](https://static.pepy.tech/personalized-badge/grad-cam?period=month&units=international_system&left_color=black&right_color=brightgreen&left_text=Monthly%20Downloads)](https://pepy.tech/project/grad-cam)
 [![Downloads](https://static.pepy.tech/personalized-badge/grad-cam?period=total&units=international_system&left_color=black&right_color=blue&left_text=Total%20Downloads)](https://pepy.tech/project/grad-cam)
 
-This is the repository of the paper "Shapley Value-based Class Activation Mapping for Improved Explainability in Neural Networks".
+This is the repository of the paper "CAMs as Shapley Value-based Explainers (https://arxiv.org/abs/2501.06261)".
 
 To reproduce the experimental results in ShaplyCAM, just run the script `usage_examples/run_img_gist.sh`
 
