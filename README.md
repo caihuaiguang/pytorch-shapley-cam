@@ -11,6 +11,7 @@ The data is the ImageNet validation set, which is available at [https://www.imag
 
 I am delighted to announce that **ShapleyCAM** has been successfully merged into one of the most widely used Explainable AI libraries, **Grad-CAM**!  You can explore it here: [pytorch-grad-cam](https://github.com/jacobgil/pytorch-grad-cam).  
 
+
 # Advanced AI explainability for PyTorch
 
 `pip install grad-cam`
@@ -52,8 +53,10 @@ The aim is also to serve as a benchmark of algorithms and metrics for research o
 | EigenGradCAM        | Like EigenCAM but with class discrimination: First principle component of Activations*Grad. Looks like GradCAM, but cleaner |
 | LayerCAM            | Spatially weight the activations by positive gradients. Works better especially in lower layers                             |
 | FullGrad            | Computes the gradients of the biases from all over the network, and then sums them                                          |
-| Deep Feature Factorizations           | Non Negative Matrix Factorization on the 2D activations                                                 |
-
+| Deep Feature Factorizations           | Non Negative Matrix Factorization on the 2D activations                                                   |
+| KPCA-CAM            | Like EigenCAM but with Kernel PCA instead of PCA                                                                            |            
+| FEM                 | A gradient free method that binarizes activations by an activation > mean + k * std rule.                                   |
+| ShapleyCAM          | Weight the activations using the gradient and Hessian-vector product.|
 ## Visual Examples
 
 | What makes the network think the image label is 'pug, pug-dog' | What makes the network think the image label is 'tabby, tabby cat' | Combining Grad-CAM with Guided Backpropagation for the 'pug, pug-dog' class |
@@ -65,7 +68,7 @@ The aim is also to serve as a benchmark of algorithms and metrics for research o
 | -----------------|-----------------------|
 | <img src="./examples/both_detection.png" width="256" height="256"> | <img src="./examples/cars_segmentation.png" width="256" height="200"> |
 
-| 3D Medical Semantic Segmentation (3D) |
+| 3D Medical Semantic Segmentation |
 | -------------------------- |
 | <img src="./examples/multiorgan_segmentation.gif" width="539">|
 
@@ -75,6 +78,11 @@ The aim is also to serve as a benchmark of algorithms and metrics for research o
 ## Deep Feature Factorization
 <img src="./examples/dff1.png">
 <img src="./examples/dff2.png">
+
+## CLIP
+| Explaining the text prompt "a dog" | Explaining the text prompt "a cat" |
+| -----------------------------------|------------------------------------|
+ <img src="https://github.com/jacobgil/pytorch-grad-cam/blob/master/examples/clip_dog.jpg?raw=true" width="256" height="256"> | <img src="https://github.com/jacobgil/pytorch-grad-cam/blob/master/examples/clip_cat.jpg?raw=true" width="256" height="256"> |
 
 ## Classification
 
@@ -102,24 +110,9 @@ The aim is also to serve as a benchmark of algorithms and metrics for research o
 <img src="./examples/metrics.png">
 <img src="./examples/road.png">
 
-
-----------
-# Choosing the Target Layer
-You need to choose the target layer to compute CAM for.
-Some common choices are:
-- FasterRCNN: model.backbone
-- Resnet18 and 50: model.layer4[-1]
-- VGG and densenet161: model.features[-1]
-- mnasnet1_0: model.layers[-1]
-- ViT: model.blocks[-1].norm1
-- SwinT: model.layers[-1].blocks[-1].norm1
-
-If you pass a list with several layers, the CAM will be averaged accross them.
-This can be useful if you're not sure what layer will perform best.
-
 ----------
 
-# Using from code as a library
+# Usage examples
 
 ```python
 from pytorch_grad_cam import GradCAM, HiResCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, XGradCAM, EigenCAM, FullGrad
@@ -132,73 +125,72 @@ target_layers = [model.layer4[-1]]
 input_tensor = # Create an input tensor image for your model..
 # Note: input_tensor can be a batch tensor with several images!
 
-# Construct the CAM object once, and then re-use it on many images:
-cam = GradCAM(model=model, target_layers=target_layers)
-
-# You can also use it within a with statement, to make sure it is freed,
-# In case you need to re-create it inside an outer loop:
-# with GradCAM(model=model, target_layers=target_layers) as cam:
-#   ...
-
-# We have to specify the target we want to generate
-# the Class Activation Maps for.
-# If targets is None, the highest scoring category
-# will be used for every image in the batch.
-# Here we use ClassifierOutputTarget, but you can define your own custom targets
-# That are, for example, combinations of categories, or specific outputs in a non standard model.
-
+# We have to specify the target we want to generate the CAM for.
 targets = [ClassifierOutputTarget(281)]
 
-# You can also pass aug_smooth=True and eigen_smooth=True, to apply smoothing.
-grayscale_cam = cam(input_tensor=input_tensor, targets=targets)
-
-# In this example grayscale_cam has only one image in the batch:
-grayscale_cam = grayscale_cam[0, :]
-visualization = show_cam_on_image(rgb_img, grayscale_cam, use_rgb=True)
-
-# You can also get the model outputs without having to re-inference
-model_outputs = cam.outputs
+# Construct the CAM object once, and then re-use it on many images.
+with GradCAM(model=model, target_layers=target_layers) as cam:
+  # You can also pass aug_smooth=True and eigen_smooth=True, to apply smoothing.
+  grayscale_cam = cam(input_tensor=input_tensor, targets=targets)
+  # In this example grayscale_cam has only one image in the batch:
+  grayscale_cam = grayscale_cam[0, :]
+  visualization = show_cam_on_image(rgb_img, grayscale_cam, use_rgb=True)
+  # You can also get the model outputs without having to redo inference
+  model_outputs = cam.outputs
 ```
+
+[cam.py](https://github.com/jacobgil/pytorch-grad-cam/blob/master/cam.py) has a more detailed usage example.
+
+----------
+# Choosing the layer(s) to extract activations from
+You need to choose the target layer to compute the CAM for.
+Some common choices are:
+- FasterRCNN: model.backbone
+- Resnet18 and 50: model.layer4[-1]
+- VGG, densenet161 and mobilenet: model.features[-1]
+- mnasnet1_0: model.layers[-1]
+- ViT: model.blocks[-1].norm1
+- SwinT: model.layers[-1].blocks[-1].norm1
+
+
+If you pass a list with several layers, the CAM will be averaged accross them.
+This can be useful if you're not sure what layer will perform best.
 
 ----------
 
-# Metrics and evaluating the explanations
+# Adapting for new architectures and tasks
 
+Methods like GradCAM were designed for and were originally mostly applied on classification models, 
+and specifically CNN classification models.
+However you can also use this package on new architectures like Vision Transformers, and on non classification tasks like Object Detection or Semantic Segmentation.
+
+The be able to adapt to non standard cases, we have two concepts.
+- The reshape transform - how do we convert activations to represent spatial images ?
+- The model targets - What exactly should the explainability method try to explain ?
+
+## The reshape_transform argument
+In a CNN the intermediate activations in the model are a mult-channel image that have the dimensions channel x rows x cols,
+and the various explainabiltiy methods work with these to produce a new image.
+
+In case of another architecture, like the Vision Transformer, the shape might be different, like (rows x cols + 1) x channels, or something else.
+The reshape transform converts the activations back into a multi-channel image, for example by removing the class token in a vision transformer. 
+For examples, check [here](https://github.com/jacobgil/pytorch-grad-cam/blob/master/pytorch_grad_cam/utils/reshape_transforms.py)
+
+## The model_target argument
+The model target is just a callable that is able to get the model output, and filter it out for the specific scalar output we want to explain.
+
+For classification tasks, the model target will typically be the output from a specific category.
+The `targets` parameter passed to the CAM method can then use `ClassifierOutputTarget`:
 ```python
-from pytorch_grad_cam.utils.model_targets import ClassifierOutputSoftmaxTarget
-from pytorch_grad_cam.metrics.cam_mult_image import CamMultImageConfidenceChange
-# Create the metric target, often the confidence drop in a score of some category
-metric_target = ClassifierOutputSoftmaxTarget(281)
-scores, batch_visualizations = CamMultImageConfidenceChange()(input_tensor, 
-  inverse_cams, targets, model, return_visualization=True)
-visualization = deprocess_image(batch_visualizations[0, :])
-
-# State of the art metric: Remove and Debias
-from pytorch_grad_cam.metrics.road import ROADMostRelevantFirst, ROADLeastRelevantFirst
-cam_metric = ROADMostRelevantFirst(percentile=75)
-scores, perturbation_visualizations = cam_metric(input_tensor, 
-  grayscale_cams, targets, model, return_visualization=True)
-
-# You can also average accross different percentiles, and combine
-# (LeastRelevantFirst - MostRelevantFirst) / 2
-from pytorch_grad_cam.metrics.road import ROADMostRelevantFirstAverage,
-                                          ROADLeastRelevantFirstAverage,
-                                          ROADCombined
-cam_metric = ROADCombined(percentiles=[20, 40, 60, 80])
-scores = cam_metric(input_tensor, grayscale_cams, targets, model)
+targets = [ClassifierOutputTarget(281)]
 ```
+
+However for more advanced cases, you might want a different behaviour.
+Check [here](https://github.com/jacobgil/pytorch-grad-cam/blob/master/pytorch_grad_cam/utils/model_targets.py) for more examples.
+
 ----------
 
-
-# Advanced use cases and tutorials:
-
-You can use this package for "custom" deep learning models, for example Object Detection or Semantic Segmentation.
-
-
-You will have to define objects that you can then pass to the CAM algorithms:
-1. A reshape_transform, that aggregates the layer outputs into 2D tensors that will be displayed.
-2. Model Targets, that define what target do you want to compute the visualizations for, for example a specific category, or a list of bounding boxes.
-
+# Tutorials
 Here you can find detailed examples of how to use this for various custom use cases like object detection:
 
 These point to the new documentation jupter-book for fast rendering.
@@ -222,6 +214,50 @@ The jupyter notebooks themselves can be found under the tutorials folder in the 
 
 
 ----------
+
+# Guided backpropagation
+
+```python
+from pytorch_grad_cam import GuidedBackpropReLUModel
+from pytorch_grad_cam.utils.image import (
+    show_cam_on_image, deprocess_image, preprocess_image
+)
+gb_model = GuidedBackpropReLUModel(model=model, device=model.device())
+gb = gb_model(input_tensor, target_category=None)
+
+cam_mask = cv2.merge([grayscale_cam, grayscale_cam, grayscale_cam])
+cam_gb = deprocess_image(cam_mask * gb)
+result = deprocess_image(gb)
+```
+
+----------
+
+# Metrics and evaluating the explanations
+
+```python
+from pytorch_grad_cam.utils.model_targets import ClassifierOutputSoftmaxTarget
+from pytorch_grad_cam.metrics.cam_mult_image import CamMultImageConfidenceChange
+# Create the metric target, often the confidence drop in a score of some category
+metric_target = ClassifierOutputSoftmaxTarget(281)
+scores, batch_visualizations = CamMultImageConfidenceChange()(input_tensor, 
+  inverse_cams, targets, model, return_visualization=True)
+visualization = deprocess_image(batch_visualizations[0, :])
+
+# State of the art metric: Remove and Debias
+from pytorch_grad_cam.metrics.road import ROADMostRelevantFirst, ROADLeastRelevantFirst
+cam_metric = ROADMostRelevantFirst(percentile=75)
+scores, perturbation_visualizations = cam_metric(input_tensor, 
+  grayscale_cams, targets, model, return_visualization=True)
+
+# You can also average across different percentiles, and combine
+# (LeastRelevantFirst - MostRelevantFirst) / 2
+from pytorch_grad_cam.metrics.road import ROADMostRelevantFirstAverage,
+                                          ROADLeastRelevantFirstAverage,
+                                          ROADCombined
+cam_metric = ROADCombined(percentiles=[20, 40, 60, 80])
+scores = cam_metric(input_tensor, grayscale_cams, targets, model)
+```
+
 
 # Smoothing to get nice looking CAMs
 
@@ -256,7 +292,7 @@ two smoothing methods are supported:
 Usage: `python cam.py --image-path <path_to_image> --method <method> --output-dir <output_dir_path> `
 
 
-To use with a specific device, like cpu, cuda, cuda:0 or mps:
+To use with a specific device, like cpu, cuda, cuda:0, mps or hpu:
 `python cam.py --image-path <path_to_image> --device cuda  --output-dir <output_dir_path> `
 
 ----------
@@ -328,3 +364,16 @@ Suraj Srinivas, Francois Fleuret`
 https://arxiv.org/abs/1806.10206 <br>
 `Deep Feature Factorization For Concept Discovery
 Edo Collins, Radhakrishna Achanta, Sabine Süsstrunk`
+
+https://arxiv.org/abs/2410.00267 <br>
+`KPCA-CAM: Visual Explainability of Deep Computer Vision Models using Kernel PCA
+Sachin Karmani, Thanushon Sivakaran, Gaurav Prasad, Mehmet Ali, Wenbo Yang, Sheyang Tang`
+
+https://hal.science/hal-02963298/document <br>
+`Features Understanding in 3D CNNs for Actions Recognition in Video
+Kazi Ahmed Asif Fuad, Pierre-Etienne Martin, Romain Giot, Romain
+Bourqui, Jenny Benois-Pineau, Akka Zemmar`
+
+https://arxiv.org/abs/2501.06261 <br>
+`CAMs as Shapley Value-based Explainers
+Huaiguang Cai`
