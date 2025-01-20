@@ -1,4 +1,4 @@
-This is the repository of the paper "CAMs as Shapley Value-based Explainers (https://arxiv.org/abs/2501.06261)".
+This is the repository of the paper "[CAMs as Shapley Value-based Explainers](https://arxiv.org/abs/2501.06261)".
 
 To reproduce the experimental results in ShaplyCAM, just run the script `usage_examples/run_img_gist.sh`. 
 
