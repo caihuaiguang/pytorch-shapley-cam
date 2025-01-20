@@ -5,9 +5,11 @@
 
 This is the repository of the paper "CAMs as Shapley Value-based Explainers (https://arxiv.org/abs/2501.06261)".
 
-To reproduce the experimental results in ShaplyCAM, just run the script `usage_examples/run_img_gist.sh`
+To reproduce the experimental results in ShaplyCAM, just run the script `usage_examples/run_img_gist.sh`. 
 
-The data is the ImageNet validation set, which is available at [https://www.image-net.org/](https://www.image-net.org/).
+The data is the ImageNet validation set, which is available at [https://www.image-net.org/](https://www.image-net.org/). All the visual examples from my paper can be found in [tutorials/vgg16_pictures.ipynb](https://github.com/caihuaiguang/pytorch-shapley-cam/blob/master/tutorials/vgg16_pictures.ipynb) or other ipynb file.  
+
+I am delighted to announce that **ShapleyCAM** has been successfully merged into one of the most widely used Explainable AI libraries, **Grad-CAM**!  You can explore it here: [PyTorch Grad-CAM GitHub](https://github.com/jacobgil/pytorch-grad-cam).  
 
 # Advanced AI explainability for PyTorch
 
