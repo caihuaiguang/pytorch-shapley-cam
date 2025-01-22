@@ -7,7 +7,7 @@ The data is the ImageNet validation set, which is available at [https://www.imag
 I am delighted to announce that **ShapleyCAM** has been successfully merged into one of the most widely used Explainable AI libraries, **Grad-CAM**!  You can explore it here: [pytorch-grad-cam](https://github.com/jacobgil/pytorch-grad-cam).  
 
 
-The journal version is [here](https://link.springer.com/article/10.1007/s00371-025-03803-1) (or [here](https://rdcu.be/d654d)), but if you find this paper useful, please consider citing it:
+The journal version is [here](https://link.springer.com/article/10.1007/s00371-025-03803-1) (or [free of access here](https://rdcu.be/d654d)), but if you find this paper useful, please consider citing it:
 
 ```
 @article{cai2025cams,
